@@ -4,11 +4,14 @@ extends CharacterBody2D
 @export var move_speed : float = 100
 @export var starting_position : Vector2 = Vector2(0, 1)
 
-@onready var anim_tree = $AnimationTree
-@onready var state_machine = anim_tree.get("parameters/playback")
+@export var weaponComponent = Node2D;
 
 @export var sprite = Sprite2D
 @export var anim_player = AnimationPlayer
+
+@onready var anim_tree = $AnimationTree
+@onready var state_machine = anim_tree.get("parameters/playback")
+
 
 # init regular variables
 var paused = false
@@ -35,6 +38,11 @@ func _physics_process(delta):
 		update_animation_parameters(input_direction)
 		move_and_slide()
 		pick_new_state()
+
+func _input(event: InputEvent):
+	
+	if (event.is_action_pressed("space") and not paused):
+		pass
 		
 		
 		
