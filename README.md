@@ -5,3 +5,5 @@
 ## February 06 2024:
 - fixed animation issues on switch
 - added animation for walking down as well
+- added sword and first animation for sword attack
+- added weapon component for player for future ref
