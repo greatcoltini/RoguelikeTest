@@ -41,8 +41,15 @@ func _physics_process(delta):
 
 func _input(event: InputEvent):
 	
+	var input_direction = Input.get_vector("left", "right", "up", "down")
+	
+	if not input_direction == Vector2.ZERO:
+			input_direction = input_direction.normalized()
+	
 	if (event.is_action_pressed("space") and not paused):
-		pass
+		anim_tree.set("parameters/Attack/blend_position", input_direction)
+		state_machine.travel("Attack")
+		weaponComponent.area.monitoring = true;
 		
 		
 		
