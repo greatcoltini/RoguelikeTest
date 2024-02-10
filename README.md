@@ -12,3 +12,8 @@
 - added sword animation for all pos
 - added sword collider
 - added logic for sword collider detection (kinda)
+
+## February 09 2024:
+- added entities and assets from previous project
+- fixed attack animation issues
+- added new assets 
