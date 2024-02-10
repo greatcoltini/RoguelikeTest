@@ -546,7 +546,7 @@ height = 24.0
 a = Vector2(-12, -24)
 b = Vector2(-3, -0.999999)
 
-[node name="player" type="CharacterBody2D" node_paths=PackedStringArray("weaponComponent", "sprite", "anim_player")]
+[node name="player" type="CharacterBody2D" node_paths=PackedStringArray("weaponComponent", "sprite", "anim_player") groups=["Player"]]
 z_index = 1
 script = ExtResource("1_px1st")
 weaponComponent = NodePath("weaponComponent")
@@ -557,7 +557,7 @@ anim_player = NodePath("AnimationPlayer")
 texture = ExtResource("1_snmvg")
 hframes = 4
 vframes = 5
-frame = 6
+frame = 4
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 libraries = {
@@ -587,7 +587,7 @@ script = ExtResource("3_qsd1c")
 
 [node name="Sprite2D" type="Sprite2D" parent="weaponComponent"]
 show_behind_parent = true
-position = Vector2(-1, 2.5)
+position = Vector2(-1, 3)
 rotation = 0.7854
 texture = ExtResource("4_fb31c")
 flip_h = true

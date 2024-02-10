@@ -1,6 +1,7 @@
-[gd_scene load_steps=16 format=3 uid="uid://cv42cnisv7beq"]
+[gd_scene load_steps=18 format=3 uid="uid://cv42cnisv7beq"]
 
 [ext_resource type="Texture2D" uid="uid://c746twvrc83jg" path="res://assets/floors/wood-floor/wood-floor.png" id="1_iykbm"]
+[ext_resource type="Script" path="res://scenes/main.gd" id="1_p0fl5"]
 [ext_resource type="Texture2D" uid="uid://c7oiuyma1g7b7" path="res://assets/walls/wood-wall/wood-wall-tiles.png" id="2_m5aj6"]
 [ext_resource type="PackedScene" uid="uid://djs0af7g3dxbf" path="res://scenes/player.tscn" id="3_q6so6"]
 [ext_resource type="PackedScene" uid="uid://dgdgdthqeiu8l" path="res://scenes/entities/blob.tscn" id="4_4x8td"]
@@ -202,7 +203,13 @@ navigation_layer_0/layers = 1
 sources/0 = SubResource("TileSetAtlasSource_2lhli")
 sources/1 = SubResource("TileSetAtlasSource_34v3t")
 
-[node name="scene" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rl4vu"]
+size = Vector2(273, 42)
+
+[node name="scene" type="Node2D" node_paths=PackedStringArray("spawn_area", "spawn_shape")]
+script = ExtResource("1_p0fl5")
+spawn_area = NodePath("spawn_area")
+spawn_shape = NodePath("spawn_area/CollisionShape2D")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_f7x7r")
@@ -214,3 +221,9 @@ position = Vector2(111, 77)
 
 [node name="blob" parent="." instance=ExtResource("4_4x8td")]
 position = Vector2(221, 145)
+
+[node name="spawn_area" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="spawn_area"]
+position = Vector2(135.5, 20)
+shape = SubResource("RectangleShape2D_rl4vu")

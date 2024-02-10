@@ -81,8 +81,8 @@ func _physics_process(_delta):
 		if current_state == STATE.CHASING:
 			
 			flip_sprite()
-			player = get_tree().get_nodes_in_group("Player")
-			move_direction = player[0].sprite.global_position - sprite.global_position
+			player = get_tree().get_first_node_in_group("Player")
+			move_direction = player.sprite.global_position - sprite.global_position
 			velocity = move_direction.normalized() * CHASING_SPEED
 			#print(move_direction)
 				
@@ -182,6 +182,8 @@ func kill():
 
 func _on_animation_tree_animation_finished(anim_name):
 	if anim_name == "death":
+		collider.disabled = true
+		anim_tree.active = false
 		drop_items()
 		queue_free()
 		
