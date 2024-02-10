@@ -1,0 +1,57 @@
+[gd_scene load_steps=6 format=3 uid="uid://byju8pra0qwj"]
+
+[ext_resource type="Script" path="res://entities/items/ItemDrop.gd" id="1_jh3b5"]
+[ext_resource type="Texture2D" uid="uid://byybbq6kt2nfs" path="res://assets/items/beef.png" id="2_rggpw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4txa4"]
+size = Vector2(18, 10)
+
+[sub_resource type="Animation" id="Animation_u6ty5"]
+resource_name = "float"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dc6ea"]
+_data = {
+"float": SubResource("Animation_u6ty5")
+}
+
+[node name="ItemDrop" type="Area2D"]
+z_index = 2
+scale = Vector2(0.503, 0.503)
+script = ExtResource("1_jh3b5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 0.368567)
+texture = ExtResource("2_rggpw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_4txa4")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "float"
+libraries = {
+"": SubResource("AnimationLibrary_dc6ea")
+}
+
+[node name="quantity" type="RichTextLabel" parent="."]
+offset_left = 5.96421
+offset_top = 1.98807
+offset_right = 45.9642
+offset_bottom = 41.9881
+scale = Vector2(0.196714, 0.162719)
+theme_override_font_sizes/normal_font_size = 25
+text = "1"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

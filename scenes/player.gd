@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal weapon_end
+
 # export variables
 @export var move_speed : float = 100
 @export var starting_position : Vector2 = Vector2(0, 1)
@@ -50,6 +52,7 @@ func _input(event: InputEvent):
 		anim_tree.set("parameters/Attack/blend_position", input_direction)
 		state_machine.travel("Attack")
 		weaponComponent.area.monitoring = true;
+		paused = true;
 		
 		
 		
@@ -64,3 +67,9 @@ func pick_new_state():
 		state_machine.travel("Walk")
 	else:
 		state_machine.travel("Idle")
+
+func _on_animation_tree_animation_finished(anim_name):
+	if (anim_name.contains("attack") || anim_name.contains("Attack")):
+		paused = false; # Replace with function body. # Replace with function body.
+		weaponComponent.area.monitoring = false
+		emit_signal("weapon_end")

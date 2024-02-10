@@ -2,6 +2,8 @@ extends Node2D
 
 @onready var area = $Sprite2D/Area2D;
 
+var current_hitters = [];
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	area.monitoring = false; # Replace with function body.
@@ -14,9 +16,15 @@ func _process(delta):
 
 func _on_area_2d_body_entered(body):
 	if self in body.get_children():
-		pass;
+		return;
+	
+	if body in current_hitters:
+		print("already hit")
 	else:
-		print(body); # Replace with function body.
+		print("new hit")
+		current_hitters.append(body)
+		
+	
 
 
 func _on_area_2d_body_exited(body):
