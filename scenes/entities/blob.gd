@@ -28,9 +28,6 @@ var recoil = false
 var player
 var enraged = false
 
-var hit_invul = false
-@onready var hit_invul_timer = $hit_invul_timer
-
 var fellow_blobs = []
 
 
@@ -150,34 +147,31 @@ func _on_timer_timeout():
 	pick_new_state()
 	
 func hit(attacker):
-	if not hit_invul:
-		hit_invul = true
-		hit_invul_timer.start(1)
-		var damage_part = damage_particle.instantiate()
-		
-		
-		
-		add_child(damage_part)
-		damage_part.position = sprite.position	
-		if current_health > 0:
-			# send in attacker info, create vector from self to attack, use that to direct
-			velocity = (sprite.global_position - attacker.sprite.global_position) * 15
-			recoil = true
-			hittimer.start(0.15)
-			current_health -= 1
-			emit_signal("damaged")
-			#animation_player.play("damage")
-			# create on-hit particle
-		#	var damage_part = damage_particle.instantiate()
-		#	add_child(damage_part)
-		#	damage_part.position = sprite.position
-			
-			
-		if current_health <= 0:
-			timer.paused = true
-			current_state = STATE.DEATH
-			kill()
+	var damage_part = damage_particle.instantiate()
 	
+	
+	
+	add_child(damage_part)
+	damage_part.position = sprite.position	
+	if current_health > 0:
+		# send in attacker info, create vector from self to attack, use that to direct
+		velocity = (sprite.global_position - attacker.sprite.global_position) * 15
+		recoil = true
+		hittimer.start(0.15)
+		current_health -= 1
+		emit_signal("damaged")
+		#animation_player.play("damage")
+		# create on-hit particle
+	#	var damage_part = damage_particle.instantiate()
+	#	add_child(damage_part)
+	#	damage_part.position = sprite.position
+		
+		
+	if current_health <= 0:
+		timer.paused = true
+		current_state = STATE.DEATH
+		kill()
+
 func kill():
 	state_machine.travel("death")
 
@@ -239,7 +233,3 @@ func _on_detection_radius_body_exited(body):
 		
 	if body in get_tree().get_nodes_in_group("Blob"):
 		fellow_blobs.erase(body)
-		
-	
-func _on_hit_invul_timer_timeout():
-	hit_invul = false # Replace with function body.

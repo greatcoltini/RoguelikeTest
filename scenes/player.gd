@@ -7,6 +7,7 @@ signal scene_change
 # export variables
 @export var move_speed : float = 100
 @export var starting_position : Vector2 = Vector2(0, 1)
+@export var health : int = 100
 
 @export var weaponComponent = Node2D;
 
@@ -77,3 +78,11 @@ func _on_animation_tree_animation_finished(anim_name):
 		paused = false; # Replace with function body. # Replace with function body.
 		weaponComponent.area.monitoring = false
 		emit_signal("weapon_end")
+		
+	
+# player takes damage	
+func damage(entity, amount):
+	health -= amount
+	
+	if health <= 0:
+		get_tree().quit()
