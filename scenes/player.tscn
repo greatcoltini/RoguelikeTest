@@ -557,7 +557,7 @@ anim_player = NodePath("AnimationPlayer")
 texture = ExtResource("1_snmvg")
 hframes = 4
 vframes = 5
-frame = 4
+frame = 6
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 libraries = {
@@ -587,7 +587,7 @@ script = ExtResource("3_qsd1c")
 
 [node name="Sprite2D" type="Sprite2D" parent="weaponComponent"]
 show_behind_parent = true
-position = Vector2(-1, 3)
+position = Vector2(-1, 2)
 rotation = 0.7854
 texture = ExtResource("4_fb31c")
 flip_h = true

@@ -1,6 +1,8 @@
 extends CharacterBody2D
 
+# signals
 signal weapon_end
+signal scene_change
 
 # export variables
 @export var move_speed : float = 100
@@ -17,19 +19,15 @@ signal weapon_end
 
 # init regular variables
 var paused = false
-
+var in_exit_zone = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
 	
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
 	
-func _physics_process(delta):
+func _physics_process(_delta):
 	# get input direction
 	var input_direction = Input.get_vector("left", "right", "up", "down")
 	
@@ -54,6 +52,11 @@ func _input(event: InputEvent):
 		state_machine.travel("Attack")
 		weaponComponent.area.monitoring = true;
 		paused = true;
+		
+	# check case for exit area
+	if (event.is_action_pressed("interact") and not paused and in_exit_zone):
+		paused = true
+		emit_signal("scene_change")
 		
 		
 		

@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_p0fl5"]
 [ext_resource type="Texture2D" uid="uid://c7oiuyma1g7b7" path="res://assets/walls/wood-wall/wood-wall-tiles.png" id="2_m5aj6"]
 [ext_resource type="PackedScene" uid="uid://djs0af7g3dxbf" path="res://scenes/player.tscn" id="3_q6so6"]
-[ext_resource type="PackedScene" uid="uid://dgdgdthqeiu8l" path="res://scenes/entities/blob.tscn" id="4_4x8td"]
+[ext_resource type="PackedScene" uid="uid://by3ramtx2dlbq" path="res://scenes/objects/dungeon_exit.tscn" id="6_b3i70"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2lhli"]
 texture = ExtResource("1_iykbm")
@@ -219,11 +219,11 @@ layer_0/tile_data = PackedInt32Array(0, 0, 0, 65536, 0, 0, 131072, 0, 0, 196608,
 [node name="player" parent="." instance=ExtResource("3_q6so6")]
 position = Vector2(111, 77)
 
-[node name="blob" parent="." instance=ExtResource("4_4x8td")]
-position = Vector2(221, 145)
-
 [node name="spawn_area" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="spawn_area"]
 position = Vector2(135.5, 20)
 shape = SubResource("RectangleShape2D_rl4vu")
+
+[node name="dungeon-exit" parent="." instance=ExtResource("6_b3i70")]
+position = Vector2(119, -8)

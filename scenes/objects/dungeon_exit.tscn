@@ -1,0 +1,86 @@
+[gd_scene load_steps=9 format=3 uid="uid://by3ramtx2dlbq"]
+
+[ext_resource type="Script" path="res://scenes/objects/dungeon_exit.gd" id="1_0d0uo"]
+[ext_resource type="Texture2D" uid="uid://bwltve5v1bhfp" path="res://assets/objects/dungeon-exit.png" id="1_pm3by"]
+[ext_resource type="Texture2D" uid="uid://c7dvc1eiqis53" path="res://assets/effects/interact.png" id="3_26g8l"]
+
+[sub_resource type="Animation" id="Animation_l1q4p"]
+resource_name = "open"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_m301x"]
+_data = {
+"open": SubResource("Animation_l1q4p")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_stu4i"]
+size = Vector2(26, 24)
+
+[sub_resource type="Animation" id="Animation_31wc8"]
+resource_name = "active"
+length = 1.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, -19), Vector2(0, -24)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nu723"]
+_data = {
+"active": SubResource("Animation_31wc8")
+}
+
+[node name="dungeon-exit" type="Node2D"]
+script = ExtResource("1_0d0uo")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_pm3by")
+hframes = 3
+vframes = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_m301x")
+}
+
+[node name="Area2D" type="Area2D" parent="."]
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 20)
+shape = SubResource("RectangleShape2D_stu4i")
+
+[node name="Interact" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.270588)
+position = Vector2(0, -22.75)
+texture = ExtResource("3_26g8l")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Interact"]
+libraries = {
+"": SubResource("AnimationLibrary_nu723")
+}
+autoplay = "active"
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

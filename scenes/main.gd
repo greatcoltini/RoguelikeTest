@@ -1,26 +1,23 @@
 extends Node2D
 
-var blob_count = 0
+var enemies_alive = 0
+var enemies_to_spawn = 1
 
 var blob_file = preload("res://scenes/entities/blob.tscn")
 
 @export var spawn_area = Area2D
 @export var spawn_shape = CollisionShape2D
 
+@onready var exit = $"dungeon-exit"
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	var spawn_timer = get_tree().create_timer(randi_range(5, 15))
+	spawn_timer.timeout.connect(spawn_blob) # Replace with function body.
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	while blob_count < 5:
-		var spawn_timer = get_tree().create_timer(randi_range(5, 15))
-		spawn_timer.timeout.connect(spawn_blob)
-		blob_count += 1
-		
-		
 func spawn_blob():
+	enemies_to_spawn -= 1
+	enemies_alive += 1
 	var blob = blob_file.instantiate()
 	
 	var centerpos = spawn_shape.position;
@@ -30,6 +27,20 @@ func spawn_blob():
 	positionInArea.y = (randi() % int(size.y)) - (size.y/2) + centerpos.y
 	
 	blob.position = positionInArea
+	blob.removed.connect(self.decrement_enemies)
 	add_child(blob)
+	
+	if enemies_to_spawn > 0:
+		var spawn_timer = get_tree().create_timer(randi_range(5, 15))
+		spawn_timer.timeout.connect(spawn_blob)
+	
+	
+func decrement_enemies():
+	enemies_alive -= 1
+	
+	if enemies_to_spawn <= 0 and enemies_alive <= 0:
+		exit.get_node("AnimationPlayer").play("open")
+		exit.get_node("Area2D").monitoring = true
+		exit.get_node("Interact").visible = true
 	
 	

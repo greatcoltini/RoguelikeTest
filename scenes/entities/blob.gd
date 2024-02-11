@@ -10,6 +10,7 @@ const MAX_HEALTH = 3
 
 #signals
 signal damaged
+signal removed
 
 # initialize variables for relative parts of entity
 @onready var sprite = $Sprite2D
@@ -184,6 +185,7 @@ func _on_animation_tree_animation_finished(anim_name):
 	if anim_name == "death":
 		collider.disabled = true
 		anim_tree.active = false
+		emit_signal("removed")
 		drop_items()
 		queue_free()
 		
