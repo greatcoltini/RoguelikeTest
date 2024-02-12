@@ -540,7 +540,8 @@ transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition
 graph_offset = Vector2(-70, 31)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d8qp6"]
-height = 24.0
+radius = 5.0
+height = 16.0
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_m1kdu"]
 a = Vector2(-12, -24)
@@ -554,10 +555,11 @@ sprite = NodePath("Sprite2D")
 anim_player = NodePath("AnimationPlayer")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_snmvg")
 hframes = 4
 vframes = 5
-frame = 4
+frame = 6
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 libraries = {
@@ -575,7 +577,6 @@ libraries = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 5)
 shape = SubResource("CapsuleShape2D_d8qp6")
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -587,7 +588,7 @@ script = ExtResource("3_qsd1c")
 
 [node name="Sprite2D" type="Sprite2D" parent="weaponComponent"]
 show_behind_parent = true
-position = Vector2(-1, 3)
+position = Vector2(-1, 2)
 rotation = 0.7854
 texture = ExtResource("4_fb31c")
 flip_h = true
