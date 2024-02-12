@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://djs0af7g3dxbf"]
+[gd_scene load_steps=46 format=3 uid="uid://djs0af7g3dxbf"]
 
 [ext_resource type="Script" path="res://scenes/player.gd" id="1_px1st"]
 [ext_resource type="Texture2D" uid="uid://d1kwi8b2utwi1" path="res://assets/mainchar/main-char.png" id="1_snmvg"]
@@ -543,6 +543,61 @@ graph_offset = Vector2(-70, 31)
 radius = 5.0
 height = 16.0
 
+[sub_resource type="Animation" id="Animation_7jn4j"]
+resource_name = "scene_change"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:zoom")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.9, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(4, 4), Vector2(5.69, 5.69), Vector2(9.155, 9.155), Vector2(4, 4)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 0,
+"values": []
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Panel:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.9, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rlm2d"]
+_data = {
+"scene_change": SubResource("Animation_7jn4j")
+}
+
+[sub_resource type="Gradient" id="Gradient_65f36"]
+offsets = PackedFloat32Array(0, 0.995798, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.0798319, 0.0798319, 0.0798319, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1f02y"]
+gradient = SubResource("Gradient_65f36")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fgkq3"]
+texture = SubResource("GradientTexture1D_1f02y")
+
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_m1kdu"]
 a = Vector2(-12, -24)
 b = Vector2(-3, -0.999999)
@@ -559,7 +614,7 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_snmvg")
 hframes = 4
 vframes = 5
-frame = 6
+frame = 5
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 libraries = {
@@ -580,8 +635,22 @@ libraries = {
 shape = SubResource("CapsuleShape2D_d8qp6")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(3, 3)
+zoom = Vector2(4, 4)
 position_smoothing_enabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera2D"]
+libraries = {
+"": SubResource("AnimationLibrary_rlm2d")
+}
+
+[node name="Panel" type="Panel" parent="Camera2D"]
+modulate = Color(1, 1, 1, 0)
+z_index = 2
+offset_left = -143.0
+offset_top = -80.0
+offset_right = 144.0
+offset_bottom = 80.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_fgkq3")
 
 [node name="weaponComponent" type="Node2D" parent="."]
 script = ExtResource("3_qsd1c")

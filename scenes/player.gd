@@ -57,6 +57,7 @@ func _input(event: InputEvent):
 	# check case for exit area
 	if (event.is_action_pressed("interact") and not paused and in_exit_zone):
 		paused = true
+		$Camera2D/AnimationPlayer.play("scene_change")
 		emit_signal("scene_change")
 		
 		

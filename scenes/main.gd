@@ -17,16 +17,25 @@ var dungeon_exit = null
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_start_game()
+	player.scene_change.connect(_new_level)
+	
+# maybe we add pause and anim here
+func _new_level():
+	player.visible = false
+	var level_timer = get_tree().create_timer(3)
+	level_timer.timeout.connect(_start_game) # Replace with function body.
 	
 	
 func _start_game():
-	map = maps[0].instantiate()
+	player.visible = true
+	player.paused = false
+	map = maps[randi() % int(maps.size())].instantiate()
 	add_child(map)
 	spawn_area = map.spawn_area
 	starting_location = map.starting_area
 	dungeon_exit = map.dungeon_exit
 	# change this later to depend on stage level
-	enemies_to_spawn = randi_range(2, 5)
+	enemies_to_spawn = randi_range(1, 1)
 	var spawn_timer = get_tree().create_timer(randi_range(5, 15))
 	spawn_timer.timeout.connect(spawn_blob) # Replace with function body.
 	place_player()
@@ -37,8 +46,10 @@ func spawn_blob():
 	enemies_alive += 1
 	var blob = blob_file.instantiate()
 	
-	var centerpos = spawn_area.position;
-	var size = spawn_area.shape.extents
+	var cur_spawn_area = spawn_area[randi() % int(spawn_area.size())]
+	
+	var centerpos = cur_spawn_area.position;
+	var size = cur_spawn_area.shape.extents
 	var positionInArea = Vector2i()
 	positionInArea.x = (randi() % int(size.x)) - (size.x/2) + centerpos.x
 	positionInArea.y = (randi() % int(size.y)) - (size.y/2) + centerpos.y
@@ -65,7 +76,7 @@ func decrement_enemies():
 		
 # sets up the initial level parameters		
 func setup():
-	map = maps[0].instantiate()
+	map = maps[randi() % int(maps.size())].instantiate()
 	add_child(map)
 	
 	spawn_area = map.spawn_area

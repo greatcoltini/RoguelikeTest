@@ -1,0 +1,79 @@
+[gd_scene load_steps=6 format=3 uid="uid://dc0skh6obcuc2"]
+
+[ext_resource type="Script" path="res://overlay/hotbar.gd" id="1_frfbi"]
+[ext_resource type="Texture2D" uid="uid://c0avply8qayuu" path="res://assets/hotbar_bkgd.png" id="2_ev6v4"]
+[ext_resource type="Script" path="res://overlay/slot.gd" id="2_qjtop"]
+[ext_resource type="FontFile" uid="uid://bvnun7xhyar2r" path="res://assets/m5x7.ttf" id="4_eili6"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_vtple"]
+outline_size = 4
+outline_color = Color(0.00784314, 0.00784314, 0.00784314, 1)
+
+[node name="Hotbar" type="Node2D"]
+script = ExtResource("1_frfbi")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.376471)
+offset_left = 77.0
+offset_top = 129.0
+offset_right = 239.0
+offset_bottom = 154.0
+texture = ExtResource("2_ev6v4")
+expand_mode = 2
+
+[node name="HotbarSlots" type="GridContainer" parent="."]
+offset_left = 79.0
+offset_top = 131.0
+offset_right = 238.0
+offset_bottom = 151.0
+theme_override_constants/h_separation = 2
+columns = 8
+
+[node name="HotbarSlot1" type="Panel" parent="HotbarSlots"]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+script = ExtResource("2_qjtop")
+
+[node name="HotbarSlot2" type="Panel" parent="HotbarSlots"]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+script = ExtResource("2_qjtop")
+
+[node name="HotbarSlot3" type="Panel" parent="HotbarSlots"]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+script = ExtResource("2_qjtop")
+
+[node name="HotbarSlot4" type="Panel" parent="HotbarSlots"]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+script = ExtResource("2_qjtop")
+
+[node name="HotbarSlot5" type="Panel" parent="HotbarSlots"]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+script = ExtResource("2_qjtop")
+
+[node name="HotbarSlot6" type="Panel" parent="HotbarSlots"]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+script = ExtResource("2_qjtop")
+
+[node name="HotbarSlot7" type="Panel" parent="HotbarSlots"]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+script = ExtResource("2_qjtop")
+
+[node name="HotbarSlot8" type="Panel" parent="HotbarSlots"]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+script = ExtResource("2_qjtop")
+
+[node name="ActiveItemLabel" type="Label" parent="."]
+offset_left = 78.0
+offset_top = 117.0
+offset_right = 136.0
+offset_bottom = 143.0
+theme_override_fonts/font = ExtResource("4_eili6")
+text = "Sample"
+label_settings = SubResource("LabelSettings_vtple")

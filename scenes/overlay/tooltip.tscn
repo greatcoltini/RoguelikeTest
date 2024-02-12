@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://q1x7yxarbqse"]
+
+[node name="tooltip" type="Node2D"]
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(20, 20)
+offset_right = 52.0
+offset_bottom = 23.0
+size_flags_vertical = 3
+
+[node name="item_name" type="RichTextLabel" parent="PanelContainer"]
+layout_mode = 2
+text = "/Item Name
+"
+fit_content = true
+autowrap_mode = 0
+
+[node name="item_extra" type="RichTextLabel" parent="PanelContainer"]
+layout_mode = 2
+theme_override_colors/default_color = Color(0.952941, 0.623529, 0.156863, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 8
+theme_override_font_sizes/normal_font_size = 10
+text = "
+
+hello"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+tab_size = 2

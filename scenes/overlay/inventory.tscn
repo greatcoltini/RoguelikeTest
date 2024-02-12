@@ -1,0 +1,401 @@
+[gd_scene load_steps=32 format=3 uid="uid://dxr5m6vsd03mr"]
+
+[ext_resource type="Texture2D" uid="uid://i7c8q825f4y5" path="res://assets/overlay/default_inventory_background.png" id="1_0r3oq"]
+[ext_resource type="Script" path="res://scenes/overlay/inventory.gd" id="1_t3exl"]
+[ext_resource type="Script" path="res://scenes/overlay/slot.gd" id="3_fsud8"]
+[ext_resource type="Texture2D" uid="uid://y0xkysjnu0vq" path="res://assets/overlay/item_slot/item_slot_empty.png" id="3_t6bjp"]
+[ext_resource type="Texture2D" uid="uid://bxxw88fkl28fe" path="res://assets/overlay/inventory_tabs/crafting-tab.png" id="5_sqkjv"]
+[ext_resource type="Script" path="res://scenes/overlay/tab.gd" id="5_ttqtc"]
+[ext_resource type="Texture2D" uid="uid://xuvl1orkfmlt" path="res://assets/overlay/inventory_tabs/inventory-tab.png" id="6_2nrka"]
+[ext_resource type="Texture2D" uid="uid://brcoap4au17xa" path="res://assets/overlay/inventory_tabs/skills-tab.png" id="7_hmv87"]
+[ext_resource type="Texture2D" uid="uid://73bew383e3lj" path="res://assets/overlay/crafting-panels/building-panel.png" id="8_s0dnl"]
+[ext_resource type="Texture2D" uid="uid://cba3cy03vp1er" path="res://assets/overlay/inventory_tabs/accomplishments-tab.png" id="8_tksqv"]
+[ext_resource type="Texture2D" uid="uid://oi8hvo0up1rx" path="res://assets/overlay/crafting-panels/toolmaking-panel.png" id="9_ixxb4"]
+[ext_resource type="Texture2D" uid="uid://pyidi670cvif" path="res://assets/overlay/craft-button/craft-button-standard.png" id="9_lrvxu"]
+[ext_resource type="Texture2D" uid="uid://b6aikbgki43t2" path="res://assets/overlay/crafting-panels/cooking-panel.png" id="10_eng3s"]
+[ext_resource type="Texture2D" uid="uid://lk3380oxpstn" path="res://assets/overlay/craft-button/craft-button-selected.png" id="10_fj81o"]
+[ext_resource type="Texture2D" uid="uid://dvj57yv0hn68a" path="res://assets/overlay/crafting-panels/gardening-panel.png" id="11_g2mvt"]
+[ext_resource type="Texture2D" uid="uid://hhulxuermkkc" path="res://assets/overlay/craft-button/craft-button-error.png" id="11_lbfpw"]
+[ext_resource type="Texture2D" uid="uid://fhsippj02c3b" path="res://assets/overlay/crafting-panels/armouring-panel.png" id="12_k4dqa"]
+[ext_resource type="Texture2D" uid="uid://ccsqjrb1vedhx" path="res://assets/overlay/crafting-panels/adventuring-panel.png" id="13_hd1gx"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7lemb"]
+texture = ExtResource("3_t6bjp")
+
+[sub_resource type="Animation" id="Animation_lt8rf"]
+resource_name = "close"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [2, 1, 0]
+}
+
+[sub_resource type="Animation" id="Animation_t6c8s"]
+resource_name = "open"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kqyo8"]
+_data = {
+"close": SubResource("Animation_lt8rf"),
+"open": SubResource("Animation_t6c8s")
+}
+
+[sub_resource type="Animation" id="Animation_yfqs5"]
+resource_name = "close"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [2, 1, 0]
+}
+
+[sub_resource type="Animation" id="Animation_i5cn6"]
+resource_name = "open"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ndxn1"]
+_data = {
+"close": SubResource("Animation_yfqs5"),
+"open": SubResource("Animation_i5cn6")
+}
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_38ajl"]
+texture = ExtResource("8_s0dnl")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xgb45"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource("9_ixxb4")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yyu6i"]
+texture = ExtResource("10_eng3s")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0lv81"]
+texture = ExtResource("11_g2mvt")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3hp7j"]
+texture = ExtResource("12_k4dqa")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_q1301"]
+texture = ExtResource("13_hd1gx")
+
+[node name="Inventory" type="Node2D" groups=["InventoryMain"]]
+script = ExtResource("1_t3exl")
+
+[node name="TextureRect" type="TextureRect" parent="." groups=["Crafting", "General", "Inventory", "Skills"]]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_0r3oq")
+
+[node name="InventorySlots" type="GridContainer" parent="." groups=["Inventory"]]
+offset_left = 97.0
+offset_top = 23.0
+offset_right = 203.0
+offset_bottom = 106.0
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 5
+columns = 5
+
+[node name="Slot1" type="Panel" parent="InventorySlots"]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_7lemb")
+script = ExtResource("3_fsud8")
+
+[node name="Slot2" type="Panel" parent="InventorySlots"]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_7lemb")
+script = ExtResource("3_fsud8")
+
+[node name="Slot3" type="Panel" parent="InventorySlots"]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_7lemb")
+script = ExtResource("3_fsud8")
+
+[node name="Slot4" type="Panel" parent="InventorySlots"]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_7lemb")
+script = ExtResource("3_fsud8")
+
+[node name="Slot5" type="Panel" parent="InventorySlots"]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_7lemb")
+script = ExtResource("3_fsud8")
+
+[node name="Slot6" type="Panel" parent="InventorySlots"]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_7lemb")
+script = ExtResource("3_fsud8")
+
+[node name="Slot7" type="Panel" parent="InventorySlots"]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_7lemb")
+script = ExtResource("3_fsud8")
+
+[node name="Slot8" type="Panel" parent="InventorySlots"]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_7lemb")
+script = ExtResource("3_fsud8")
+
+[node name="Slot9" type="Panel" parent="InventorySlots"]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_7lemb")
+script = ExtResource("3_fsud8")
+
+[node name="Slot10" type="Panel" parent="InventorySlots"]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_7lemb")
+script = ExtResource("3_fsud8")
+
+[node name="Slot11" type="Panel" parent="InventorySlots"]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_7lemb")
+script = ExtResource("3_fsud8")
+
+[node name="Slot12" type="Panel" parent="InventorySlots"]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_7lemb")
+script = ExtResource("3_fsud8")
+
+[node name="Slot13" type="Panel" parent="InventorySlots"]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_7lemb")
+script = ExtResource("3_fsud8")
+
+[node name="Slot14" type="Panel" parent="InventorySlots"]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_7lemb")
+script = ExtResource("3_fsud8")
+
+[node name="Slot15" type="Panel" parent="InventorySlots"]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_7lemb")
+script = ExtResource("3_fsud8")
+
+[node name="Slot16" type="Panel" parent="InventorySlots"]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_7lemb")
+script = ExtResource("3_fsud8")
+
+[node name="Slot17" type="Panel" parent="InventorySlots"]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_7lemb")
+script = ExtResource("3_fsud8")
+
+[node name="Slot18" type="Panel" parent="InventorySlots"]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_7lemb")
+script = ExtResource("3_fsud8")
+
+[node name="Slot19" type="Panel" parent="InventorySlots"]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_7lemb")
+script = ExtResource("3_fsud8")
+
+[node name="Slot20" type="Panel" parent="InventorySlots"]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_7lemb")
+script = ExtResource("3_fsud8")
+
+[node name="InventoryTabs" type="GridContainer" parent="." groups=["Crafting", "General", "Inventory", "Skills", "Tabs"]]
+offset_left = 127.0
+offset_top = 2.0
+offset_right = 225.0
+offset_bottom = 22.0
+scale = Vector2(0.767857, 0.772727)
+theme_override_constants/h_separation = 6
+columns = 4
+
+[node name="Crafting-tab" type="Panel" parent="InventoryTabs"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+tooltip_text = "Craft"
+script = ExtResource("5_ttqtc")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="InventoryTabs/Crafting-tab"]
+libraries = {
+"": SubResource("AnimationLibrary_kqyo8")
+}
+
+[node name="Sprite2D" type="Sprite2D" parent="InventoryTabs/Crafting-tab"]
+position = Vector2(8, 7)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("5_sqkjv")
+hframes = 3
+
+[node name="Skills-tab" type="Panel" parent="InventoryTabs"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+tooltip_text = "Skills"
+script = ExtResource("5_ttqtc")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="InventoryTabs/Skills-tab"]
+libraries = {
+"": SubResource("AnimationLibrary_kqyo8")
+}
+
+[node name="Sprite2D" type="Sprite2D" parent="InventoryTabs/Skills-tab"]
+position = Vector2(8, 7)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("7_hmv87")
+hframes = 3
+frame = 2
+
+[node name="Accomplishments-tab" type="Panel" parent="InventoryTabs"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+tooltip_text = "Skills"
+script = ExtResource("5_ttqtc")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="InventoryTabs/Accomplishments-tab"]
+libraries = {
+"": SubResource("AnimationLibrary_kqyo8")
+}
+
+[node name="Sprite2D" type="Sprite2D" parent="InventoryTabs/Accomplishments-tab"]
+position = Vector2(8, 7)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("8_tksqv")
+hframes = 3
+
+[node name="Inventory-tab" type="Panel" parent="InventoryTabs"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+tooltip_text = "Inventory"
+script = ExtResource("5_ttqtc")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="InventoryTabs/Inventory-tab"]
+libraries = {
+"": SubResource("AnimationLibrary_ndxn1")
+}
+
+[node name="Sprite2D" type="Sprite2D" parent="InventoryTabs/Inventory-tab"]
+position = Vector2(9, 7)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("6_2nrka")
+hframes = 3
+
+[node name="CraftingPanel" type="GridContainer" parent="." groups=["Crafting"]]
+custom_minimum_size = Vector2(170, 90)
+layout_direction = 1
+offset_left = 35.0
+offset_top = 19.0
+offset_right = 205.0
+offset_bottom = 109.0
+columns = 2
+
+[node name="CraftingMenus" type="GridContainer" parent="CraftingPanel"]
+layout_mode = 2
+theme_override_constants/v_separation = -1
+
+[node name="Building" type="Panel" parent="CraftingPanel/CraftingMenus"]
+custom_minimum_size = Vector2(50, 10)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_38ajl")
+
+[node name="Toolmaking" type="Panel" parent="CraftingPanel/CraftingMenus"]
+custom_minimum_size = Vector2(50, 10)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_xgb45")
+
+[node name="Cooking" type="Panel" parent="CraftingPanel/CraftingMenus"]
+custom_minimum_size = Vector2(50, 10)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_yyu6i")
+
+[node name="Gardening" type="Panel" parent="CraftingPanel/CraftingMenus"]
+custom_minimum_size = Vector2(50, 10)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_0lv81")
+
+[node name="Armouring" type="Panel" parent="CraftingPanel/CraftingMenus"]
+custom_minimum_size = Vector2(50, 10)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_3hp7j")
+
+[node name="Adventuring" type="Panel" parent="CraftingPanel/CraftingMenus"]
+custom_minimum_size = Vector2(50, 10)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_q1301")
+
+[node name="CraftingSlots" type="GridContainer" parent="CraftingPanel"]
+layout_mode = 2
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 4
+columns = 5
+
+[node name="CraftingRequirements" type="GridContainer" parent="." groups=["Crafting"]]
+offset_left = 156.0
+offset_top = 67.0
+offset_right = 196.0
+offset_bottom = 107.0
+columns = 2
+
+[node name="CraftingButton" type="TextureButton" parent="." groups=["Crafting"]]
+custom_minimum_size = Vector2(40, 40)
+offset_left = 36.0
+offset_top = 75.0
+offset_right = 176.0
+offset_bottom = 138.0
+scale = Vector2(0.351, 0.391)
+texture_normal = ExtResource("9_lrvxu")
+texture_hover = ExtResource("10_fj81o")
+texture_disabled = ExtResource("11_lbfpw")
+stretch_mode = 0
