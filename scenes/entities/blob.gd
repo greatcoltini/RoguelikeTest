@@ -148,9 +148,7 @@ func _on_timer_timeout():
 	
 func hit(attacker):
 	var damage_part = damage_particle.instantiate()
-	
-	
-	
+
 	add_child(damage_part)
 	damage_part.position = sprite.position	
 	if current_health > 0:

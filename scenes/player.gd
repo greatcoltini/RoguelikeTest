@@ -40,6 +40,8 @@ func _physics_process(_delta):
 		update_animation_parameters(input_direction)
 		move_and_slide()
 		pick_new_state()
+	else:
+		move_and_slide()
 
 func _input(event: InputEvent):
 	
@@ -85,5 +87,17 @@ func _on_animation_tree_animation_finished(anim_name):
 func damage(entity, amount):
 	health -= amount
 	
+	velocity = (sprite.global_position - entity.sprite.global_position) * 10
+	paused = true
+	var temp_anim = anim_player.instantiate()
+	temp_anim.play("damaged")
+	
+	var bounce_timer = get_tree().create_timer(0.2)
+	bounce_timer.timeout.connect(unpause) # Replace with function body.
+	
 	if health <= 0:
 		get_tree().quit()
+		
+func unpause():
+	velocity = Vector2.ZERO
+	paused = false
