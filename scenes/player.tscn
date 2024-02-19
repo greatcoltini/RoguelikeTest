@@ -1,8 +1,9 @@
-[gd_scene load_steps=46 format=3 uid="uid://djs0af7g3dxbf"]
+[gd_scene load_steps=44 format=3 uid="uid://djs0af7g3dxbf"]
 
 [ext_resource type="Script" path="res://scenes/player.gd" id="1_px1st"]
 [ext_resource type="Texture2D" uid="uid://d1kwi8b2utwi1" path="res://assets/mainchar/main-char.png" id="1_snmvg"]
 [ext_resource type="Script" path="res://scenes/weaponComponent.gd" id="3_qsd1c"]
+[ext_resource type="Texture2D" uid="uid://cd0ig42ees3cs" path="res://assets/overlay/blackscreen.png" id="3_s0vun"]
 [ext_resource type="Texture2D" uid="uid://c0jc86q7348v2" path="res://assets/weapons/Iron Sword.png" id="4_fb31c"]
 
 [sub_resource type="Animation" id="Animation_u3dgs"]
@@ -573,30 +574,20 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Panel:modulate")
+tracks/2/path = NodePath("../cameraBlock:self_modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.9, 1.2),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.5, 1, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rlm2d"]
 _data = {
 "scene_change": SubResource("Animation_7jn4j")
 }
-
-[sub_resource type="Gradient" id="Gradient_65f36"]
-offsets = PackedFloat32Array(0, 0.995798, 1)
-colors = PackedColorArray(0, 0, 0, 1, 0.0798319, 0.0798319, 0.0798319, 1, 1, 1, 1, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_1f02y"]
-gradient = SubResource("Gradient_65f36")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fgkq3"]
-texture = SubResource("GradientTexture1D_1f02y")
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_m1kdu"]
 a = Vector2(-12, -24)
@@ -609,12 +600,19 @@ weaponComponent = NodePath("weaponComponent")
 sprite = NodePath("Sprite2D")
 anim_player = NodePath("AnimationPlayer")
 
+[node name="cameraBlock" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+light_mask = 3
+visibility_layer = 3
+scale = Vector2(0.372434, 0.292181)
+texture = ExtResource("3_s0vun")
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_snmvg")
 hframes = 4
 vframes = 5
-frame = 5
+frame = 4
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 libraries = {
@@ -642,22 +640,14 @@ position_smoothing_enabled = true
 libraries = {
 "": SubResource("AnimationLibrary_rlm2d")
 }
-
-[node name="Panel" type="Panel" parent="Camera2D"]
-modulate = Color(1, 1, 1, 0)
-z_index = 2
-offset_left = -143.0
-offset_top = -80.0
-offset_right = 144.0
-offset_bottom = 80.0
-theme_override_styles/panel = SubResource("StyleBoxTexture_fgkq3")
+playback_default_blend_time = 1.0
 
 [node name="weaponComponent" type="Node2D" parent="."]
 script = ExtResource("3_qsd1c")
 
 [node name="Sprite2D" type="Sprite2D" parent="weaponComponent"]
 show_behind_parent = true
-position = Vector2(-1, 2)
+position = Vector2(-1, 3)
 rotation = 0.7854
 texture = ExtResource("4_fb31c")
 flip_h = true
