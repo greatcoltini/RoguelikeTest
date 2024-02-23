@@ -40,8 +40,6 @@ func _physics_process(_delta):
 		update_animation_parameters(input_direction)
 		move_and_slide()
 		pick_new_state()
-	else:
-		move_and_slide()
 
 func _input(event: InputEvent):
 	
@@ -89,8 +87,14 @@ func damage(entity, amount):
 	
 	velocity = (sprite.global_position - entity.sprite.global_position) * 10
 	paused = true
-	var temp_anim = anim_player.instantiate()
-	temp_anim.play("damaged")
+	
+	Globals.DAMAGE_EFFECT(self, sprite, 1)
+	
+	#var tween = get_tree().create_tween()
+	#tween.tween_property(sprite, "modulate:a", 0.5, 0.1)
+	#tween.tween_property(sprite, "modulate:a", 1, 0.1)
+	#tween.tween_property(sprite, "modulate:a", 0.5, 0.1)
+	
 	
 	var bounce_timer = get_tree().create_timer(0.2)
 	bounce_timer.timeout.connect(unpause) # Replace with function body.
