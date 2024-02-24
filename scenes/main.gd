@@ -21,9 +21,17 @@ func _ready():
 	
 # maybe we add pause and anim here
 func _new_level():
+	_clear_level()
 	player.visible = false
-	var level_timer = get_tree().create_timer(3)
+	var level_timer = get_tree().create_timer(1)
 	level_timer.timeout.connect(_start_game) # Replace with function body.
+	
+func _clear_level():
+	var scene = get_tree().root.get_node("scene");
+	for child in scene.get_children():
+		if not child.is_in_group("Player"):
+			child.queue_free()
+			
 	
 	
 func _start_game():
