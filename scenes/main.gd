@@ -2,6 +2,7 @@ extends Node2D
 
 var enemies_alive = 0
 var enemies_to_spawn = 1
+var current_level = 0
 
 var blob_file = preload("res://scenes/entities/blob.tscn")
 
@@ -22,6 +23,7 @@ func _ready():
 # maybe we add pause and anim here
 func _new_level():
 	_clear_level()
+	current_level += 1
 	player.visible = false
 	var level_timer = get_tree().create_timer(1)
 	level_timer.timeout.connect(_start_game) # Replace with function body.
@@ -43,8 +45,8 @@ func _start_game():
 	starting_location = map.starting_area
 	dungeon_exit = map.dungeon_exit
 	# change this later to depend on stage level
-	enemies_to_spawn = randi_range(1, 1)
-	var spawn_timer = get_tree().create_timer(randi_range(5, 15))
+	enemies_to_spawn = randi_range(1 + current_level, 2 + current_level)
+	var spawn_timer = get_tree().create_timer(randi_range(1, 3))
 	spawn_timer.timeout.connect(spawn_blob) # Replace with function body.
 	place_player()
 
@@ -67,7 +69,7 @@ func spawn_blob():
 	add_child(blob)
 	
 	if enemies_to_spawn > 0:
-		var spawn_timer = get_tree().create_timer(randi_range(5, 15))
+		var spawn_timer = get_tree().create_timer(randi_range(1, 3))
 		spawn_timer.timeout.connect(spawn_blob)
 	
 
