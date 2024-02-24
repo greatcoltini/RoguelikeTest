@@ -22,6 +22,9 @@ signal scene_change
 var paused = false
 var in_exit_zone = false
 
+# recoil represents character being pushed by entity
+var recoil = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -40,6 +43,9 @@ func _physics_process(_delta):
 		update_animation_parameters(input_direction)
 		move_and_slide()
 		pick_new_state()
+		
+	if recoil:
+		move_and_slide()
 
 func _input(event: InputEvent):
 	
@@ -90,14 +96,10 @@ func damage(entity, amount):
 	
 	Globals.DAMAGE_EFFECT(self, sprite, 1)
 	
-	#var tween = get_tree().create_tween()
-	#tween.tween_property(sprite, "modulate:a", 0.5, 0.1)
-	#tween.tween_property(sprite, "modulate:a", 1, 0.1)
-	#tween.tween_property(sprite, "modulate:a", 0.5, 0.1)
-	
 	
 	var bounce_timer = get_tree().create_timer(0.2)
 	bounce_timer.timeout.connect(unpause) # Replace with function body.
+	recoil = true
 	
 	if health <= 0:
 		get_tree().quit()
@@ -105,3 +107,4 @@ func damage(entity, amount):
 func unpause():
 	velocity = Vector2.ZERO
 	paused = false
+	recoil = false
