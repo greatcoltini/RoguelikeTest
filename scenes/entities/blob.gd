@@ -49,24 +49,6 @@ func _ready():
 	select_new_direction()
 	pick_new_state()
 	current_health = MAX_HEALTH
-	
-	if get_tree().root.has_node("game_level/Camera2D/scene_lighting"):
-		Daynight = get_tree().root.get_node("game_level/Camera2D/scene_lighting")
-		Daynight.night_time.connect(self.sleep_state)
-		Daynight.day_time.connect(self.awaken)
-	
-func sleep_state():
-	if not (current_state == STATE.CHASING):
-		current_state = STATE.SLEEPING
-		pick_new_state()
-	timer.set_paused(true)
-	
-func awaken():
-	# begins day cycle for llamas
-	current_state = STATE.IDLE
-	timer.set_paused(false)
-	timer.stop()
-	pick_new_state()
 
 # idle function
 func _physics_process(_delta):

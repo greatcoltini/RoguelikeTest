@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://tbjldm3eenuo"]
+
+[ext_resource type="Script" path="res://scenes/overlay/levelProgress.gd" id="1_me32b"]
+
+[node name="UI" type="CanvasLayer"]
+
+[node name="levelProgress" type="ProgressBar" parent="."]
+offset_left = 423.0
+offset_top = 600.0
+offset_right = 680.0
+offset_bottom = 627.0
+scale = Vector2(1.52337, 1.61855)
+show_percentage = false
+script = ExtResource("1_me32b")

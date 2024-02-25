@@ -27,7 +27,7 @@ var recoil = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	weaponComponent.visible = false
 	
 
 	
@@ -59,6 +59,7 @@ func _input(event: InputEvent):
 		state_machine.travel("Attack")
 		weaponComponent.area.monitoring = true;
 		paused = true;
+		weaponComponent.visible = true
 		
 	# check case for exit area
 	if (event.is_action_pressed("interact") and not paused and in_exit_zone):
@@ -85,6 +86,7 @@ func _on_animation_tree_animation_finished(anim_name):
 		paused = false; # Replace with function body. # Replace with function body.
 		weaponComponent.area.monitoring = false
 		emit_signal("weapon_end")
+		weaponComponent.visible = false
 		
 	
 # player takes damage	

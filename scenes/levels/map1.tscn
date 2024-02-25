@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://by3ramtx2dlbq" path="res://scenes/objects/dungeon_exit.tscn" id="2_bqhnq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p26h1"]
-size = Vector2(112, 81)
+size = Vector2(273, 158.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pbtse"]
 
@@ -28,11 +28,7 @@ position = Vector2(217, 8)
 [node name="spawn-area" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="spawn-area"]
-position = Vector2(137, 58)
-shape = SubResource("RectangleShape2D_p26h1")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="spawn-area"]
-position = Vector2(295, 58)
+position = Vector2(217.5, 96.75)
 shape = SubResource("RectangleShape2D_p26h1")
 
 [node name="starting-area" type="Area2D" parent="."]

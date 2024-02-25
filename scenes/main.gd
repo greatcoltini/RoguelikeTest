@@ -8,6 +8,9 @@ var blob_file = preload("res://scenes/entities/blob.tscn")
 
 var maps = [preload("res://scenes/levels/map1.tscn")]
 
+@onready var ui = $UI
+@onready var levelbar = $UI/levelProgress
+
 var map = null
 var spawn_area = null
 var starting_location = null
@@ -31,7 +34,7 @@ func _new_level():
 func _clear_level():
 	var scene = get_tree().root.get_node("scene");
 	for child in scene.get_children():
-		if not child.is_in_group("Player"):
+		if not child.is_in_group("Player") and not child.is_in_group("UI"):
 			child.queue_free()
 			
 	
@@ -46,6 +49,11 @@ func _start_game():
 	dungeon_exit = map.dungeon_exit
 	# change this later to depend on stage level
 	enemies_to_spawn = randi_range(1 + current_level, 2 + current_level)
+	
+	# setup level bar
+	levelbar.max_value = enemies_to_spawn
+	levelbar.value = 0
+	
 	var spawn_timer = get_tree().create_timer(randi_range(1, 3))
 	spawn_timer.timeout.connect(spawn_blob) # Replace with function body.
 	place_player()
@@ -58,11 +66,16 @@ func spawn_blob():
 	
 	var cur_spawn_area = spawn_area[randi() % int(spawn_area.size())]
 	
+	
 	var centerpos = cur_spawn_area.position;
 	var size = cur_spawn_area.shape.extents
-	var positionInArea = Vector2i()
+	var positionInArea = Vector2()
 	positionInArea.x = (randi() % int(size.x)) - (size.x/2) + centerpos.x
 	positionInArea.y = (randi() % int(size.y)) - (size.y/2) + centerpos.y
+	
+	while (positionInArea.distance_to(player.position) < 10):
+		positionInArea.x = (randi() % int(size.x)) - (size.x/2) + centerpos.x
+		positionInArea.y = (randi() % int(size.y)) - (size.y/2) + centerpos.y
 	
 	blob.position = positionInArea
 	blob.removed.connect(self.decrement_enemies)
@@ -76,6 +89,8 @@ func spawn_blob():
 # decrement enemies when kill
 func decrement_enemies():
 	enemies_alive -= 1
+	#levelbar.value += 1
+	levelbar.increment(1)
 	
 	if enemies_to_spawn <= 0 and enemies_alive <= 0:
 		dungeon_exit.get_node("AnimationPlayer").play("open")
