@@ -4,12 +4,51 @@ extends Node2D
 @onready var sprite = $Sprite2D
 var anim_tree;
 
+# variables for weapon positioning
+var mouse_pos;
+var direction
+var new_angle;
+var attacking;
+var can_attack;
+
+
 var current_hitters = [];
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	modulate.a = 0.5
 	area.monitoring = false; # Replace with function body.
-
+	can_attack = true
+	
+	
+func _physics_process(delta):
+	if not attacking:
+		# get vector from weapon to mouse position
+		mouse_pos = get_local_mouse_position()
+		direction = (sprite.position - mouse_pos).normalized()
+		
+		# create angle out of this vector
+		new_angle = (1.75*PI) + atan2(direction.y, direction.x)
+		
+		sprite.rotation = new_angle;
+	
+func _input(event: InputEvent):
+	if (event.is_action_pressed("attack") and can_attack):
+		toggle_attack()
+		modulate.a = 1.0
+		var tween = create_tween()
+		var cur_pos = position
+		tween.tween_property(self, "position", -direction * 15, 0.1)
+		tween.tween_property(self, "position", position, 0.1)
+		tween.tween_callback(toggle_attack)
+		
+		
+	
+func toggle_attack():
+	can_attack = !can_attack
+	modulate.a = 0.5
+	area.monitoring = !area.monitoring
+	attacking = !attacking
 
 
 func _on_area_2d_body_entered(body):
@@ -27,7 +66,7 @@ func _on_area_2d_body_entered(body):
 			body.hit(self)
 		current_hitters.append(body)
 		# Create a one-shot timer with a timeout function using a lambda function
-		var hit_timer = get_tree().create_timer(anim_tree.get_animation("attack_down").length)
+		var hit_timer = get_tree().create_timer(0.2)
 		hit_timer.timeout.connect(_clear_bodys)
 
 func _clear_bodys():

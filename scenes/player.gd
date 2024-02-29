@@ -27,7 +27,8 @@ var recoil = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	weaponComponent.visible = false
+	#weaponComponent.visible = false
+	pass
 	
 
 	
@@ -46,6 +47,8 @@ func _physics_process(_delta):
 		
 	if recoil:
 		move_and_slide()
+		
+	# mess around to make this work
 
 func _input(event: InputEvent):
 	
@@ -60,6 +63,10 @@ func _input(event: InputEvent):
 		weaponComponent.area.monitoring = true;
 		paused = true;
 		weaponComponent.visible = true
+		
+	if (event.is_action_pressed("attack") and not paused):
+		
+		pass
 		
 	# check case for exit area
 	if (event.is_action_pressed("interact") and not paused and in_exit_zone):
