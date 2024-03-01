@@ -88,7 +88,6 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_xd22c"]
 resource_name = "attack"
-loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -149,6 +148,7 @@ animation = &"move"
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5x2bt"]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2enxy"]
+switch_mode = 2
 advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7e8xd"]
@@ -172,7 +172,7 @@ script = ExtResource("1_idf3a")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("3_h7ic7")
 hframes = 8
-frame = 1
+frame = 7
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
