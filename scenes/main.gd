@@ -52,6 +52,9 @@ func _start_game():
 	# change this later to depend on stage level
 	enemies_to_spawn = randi_range(1 + current_level, 2 + current_level)
 	
+	# add in animation for ui to show enemies
+	ui.enemies_showcase()
+	
 	# setup level bar
 	levelbar.value = 12.5 * enemies_to_spawn
 	
