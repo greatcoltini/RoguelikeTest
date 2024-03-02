@@ -23,6 +23,7 @@ var surprise = preload("res://entities/effects/surprise_indicator.tscn")
 var damage_particle = preload("res://entities/particles/damage_particle.tscn")
 var projectile = preload("res://scenes/entities/bat_projectile.tscn")
 var hp_orb_item = preload("res://scenes/items/hp_orb.tscn")
+var soul_shard_item = preload("res://scenes/items/soul_shard.tscn")
 
 var player
 var can_attack = true
@@ -131,8 +132,17 @@ func _on_animation_tree_animation_finished(anim_name):
 		queue_free()
 		
 func drop_items():
+	# hp orb spawning
 	var hp_orb_amount = randi_range(0, 1)
 	if hp_orb_amount > 0:
 		var hp_orb = hp_orb_item.instantiate()
 		get_tree().current_scene.call_deferred("add_child", hp_orb)
 		hp_orb.position = position
+		
+	# soul shard spawning
+	var soul_shard_amount = randi_range(3, 7)
+	for i in range(soul_shard_amount):
+		var soul_shard = soul_shard_item.instantiate()
+		get_tree().current_scene.call_deferred("add_child", soul_shard)
+		soul_shard.position = position + Vector2(randi_range(-5, 5), randi_range(-5, 5))
+	

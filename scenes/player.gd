@@ -9,6 +9,9 @@ signal scene_change
 @export var starting_position : Vector2 = Vector2(0, 1)
 @export var health : int = 3
 @export var MAX_HP : int = 3
+@export var SOULS_TO_LEVEL : int = 100
+@export var souls : int = 0
+
 
 @export var weaponComponent = Node2D;
 
@@ -118,12 +121,18 @@ func damage(entity, amount):
 		
 # player heals
 func heal(amount):
-	health += amount
-	ui.hp.value += 12.5
-	
-	var tween = create_tween()
-	tween.tween_property(sprite, "modulate:g", 1.0, 0.1)
-	tween.tween_property(sprite, "modulate:g", 0, 0.1)
+	if health < MAX_HP:
+		health += amount
+		ui.hp.value += 12.5
+		
+		var tween = create_tween()
+		tween.tween_property(sprite, "modulate:a", 0.5, 0.1)
+		tween.tween_property(sprite, "modulate:a", 1, 0.1)
+
+func add_souls(amount):
+	ui.soul_shards.value += 1
+	souls += amount
+	print(souls)
 		
 func unpause():
 	velocity = Vector2.ZERO

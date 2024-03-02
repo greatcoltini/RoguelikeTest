@@ -15,8 +15,8 @@ func _physics_process(delta):
 	
 	player = get_tree().get_first_node_in_group("Player");
 	if (player and player.health < player.MAX_HP):
-		position += direction * SPEED * delta;
 		direction = (player.position - position).normalized();
+		position += direction * SPEED * delta;
 	
 # if player is not full health; player absorbs
 func _on_area_2d_body_entered(body):
