@@ -100,7 +100,7 @@ func _on_animation_tree_animation_finished(anim_name):
 func damage(entity, amount):
 	health -= amount
 	
-	velocity = (sprite.global_position - entity.sprite.global_position) * 10
+	velocity = (sprite.global_position - entity.global_position) * 10
 	paused = true
 	
 	Globals.DAMAGE_EFFECT(self, sprite, 1)

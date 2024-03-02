@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://ndw5b30ydsof"]
+
+[ext_resource type="Script" path="res://damage.gd" id="1_kxuqv"]
+[ext_resource type="Texture2D" uid="uid://d2x7lb5rldq4c" path="res://assets/entities/bat/bat-projectile.png" id="2_b1i4e"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kh77r"]
+radius = 5.0
+height = 21.6312
+
+[node name="bat_projectile" type="CharacterBody2D"]
+script = ExtResource("1_kxuqv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_b1i4e")
+hframes = 4
+frame = 3
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+rotation = 0.573995
+shape = SubResource("CapsuleShape2D_kh77r")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]

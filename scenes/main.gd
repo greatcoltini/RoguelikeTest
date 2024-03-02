@@ -5,6 +5,7 @@ var enemies_to_spawn = 1
 var current_level = 0
 
 var blob_file = preload("res://scenes/entities/blob.tscn")
+var bat_file = preload("res://scenes/entities/bat.tscn")
 
 var maps = [preload("res://scenes/levels/map1.tscn")]
 
@@ -62,7 +63,7 @@ func _start_game():
 func spawn_blob():
 	enemies_to_spawn -= 1
 	enemies_alive += 1
-	var blob = blob_file.instantiate()
+	var blob = bat_file.instantiate()
 	
 	var cur_spawn_area = spawn_area[randi() % int(spawn_area.size())]
 	

@@ -4,8 +4,7 @@ extends CharacterBody2D
 const DAMAGE_AMOUNT = 10
 const WALK_TIME = 6
 const IDLE_TIME = 2
-const MOVE_SPEED = 3
-const CHASING_SPEED = 15
+const MOVE_SPEED = 15
 const MAX_HEALTH = 3
 
 #signals
@@ -21,42 +20,37 @@ signal removed
 
 var surprise = preload("res://entities/effects/surprise_indicator.tscn")
 var damage_particle = preload("res://entities/particles/damage_particle.tscn")
+var projectile = preload("res://scenes/entities/bat_projectile.tscn")
+
 var recoil = false
 var player
 var enraged = false
+var can_attack = true
 
-enum STATE { IDLE, JUMP, CHASING, DEATH }
+enum STATE { MOVE, ATTACK, DEATH }
 
-const IDLE_STATES = [STATE.IDLE, STATE.DEATH]
-var current_state = STATE.IDLE
+var current_state = STATE.MOVE
 
 var move_direction : Vector2 = Vector2.ZERO
 var current_health = MAX_HEALTH
 
 
 func _ready():
-	state_machine.start("idle")
+	state_machine.start("move")
 	select_new_direction()
 	current_health = MAX_HEALTH
 
 # idle function
 func _physics_process(_delta):
 	# run idle animation, on idle animation end decide to jump
-	
-	if not recoil:
-		if current_state == STATE.JUMP:
-			velocity = move_direction.normalized() * MOVE_SPEED	
-			
-		if current_state == STATE.CHASING:
-			
-			flip_sprite()
-			player = get_tree().get_first_node_in_group("Player")
-			move_direction = player.sprite.global_position - sprite.global_position
-			velocity = move_direction.normalized() * CHASING_SPEED
-			#print(move_direction)
-				
-	if not current_state in IDLE_STATES:
+
+	if (current_state == STATE.DEATH):
+		return
+	if (current_state == STATE.MOVE):
+		velocity = move_direction.normalized() * MOVE_SPEED	
 		move_and_slide()
+		
+	attack()
 	
 func select_new_direction():
 	move_direction = Vector2(
@@ -64,6 +58,11 @@ func select_new_direction():
 		randi_range(-1, 1)
 	)
 	flip_sprite()
+	
+func pick_new_direction():
+	select_new_direction()
+	var move_timer = get_tree().create_timer(WALK_TIME)
+	move_timer.timeout.connect(pick_new_direction)
 		
 func flip_sprite():
 	if move_direction.x < 0:
@@ -72,21 +71,34 @@ func flip_sprite():
 		sprite.flip_h = false
 
 # detect for players function
-func attack_in_range():
+func attack():
 	""" we will raycast for the player, if it is within a certain range we will adjust ai
 		and jump towards player specifically"""
-#	var query = PhysicsRayQueryParameters2D.create(sprite.global_position, move_direction.normalized() * (move_speed * 50))
-#	var results = space_state.intersect_ray(query)
-#	if results:
-#		#print("position of item: ", results.position)
-#		#print("distance_to: ", sprite.global_position.distance_to(results.position))
-#		if sprite.global_position.distance_to(results.position) < 20:
-#			select_new_direction()	
+	var player = get_tree().get_first_node_in_group("Player");
 	
-# when player collides with blob, deal damage
-func _on_body_entered(body):
-	if body in get_tree().get_nodes_in_group("Player"):
-		body.damage(self, DAMAGE_AMOUNT)
+	if (player and (self.position.distance_to(player.position) < 50) and can_attack):
+		current_state = STATE.ATTACK
+		can_attack = false
+		state_machine.travel("attack");
+		var tween = create_tween()
+		tween.tween_property(self, "modulate:a", 0.5, 0.5)
+		tween.tween_property(self, "modulate:a", 1, 0.1)
+		tween.tween_callback(fire_attack)
+		
+		var attack_timeout = get_tree().create_timer(0.9)
+		attack_timeout.timeout.connect(func(): 
+			can_attack = !can_attack
+			pick_new_direction()
+			current_state = STATE.MOVE);
+			
+func finish_attack():
+	can_attack = !can_attack
+	pick_new_direction();
+		
+func fire_attack():
+	var fire_projectile = projectile.instantiate()
+	get_tree().current_scene.call_deferred("add_child", fire_projectile)
+	fire_projectile.position = position
 	
 func hit(attacker):
 	var damage_part = damage_particle.instantiate()
@@ -99,12 +111,6 @@ func hit(attacker):
 		recoil = true
 		current_health -= 1
 		emit_signal("damaged")
-		#animation_player.play("damage")
-		# create on-hit particle
-	#	var damage_part = damage_particle.instantiate()
-	#	add_child(damage_part)
-	#	damage_part.position = sprite.position
-		
 		
 	if current_health <= 0:
 		current_state = STATE.DEATH
@@ -128,7 +134,6 @@ func _on_timer_2_timeout():
 func _on_detection_radius_body_entered(body):
 	if body in get_tree().get_nodes_in_group("Player"):
 		spawn_surprise()
-		current_state = STATE.CHASING
 		player = body
 		
 func spawn_surprise():
@@ -136,6 +141,3 @@ func spawn_surprise():
 		var indicator = surprise.instantiate()
 		add_child(indicator)
 		
-func _on_detection_radius_body_exited(body):
-	if body in get_tree().get_nodes_in_group("Player"):
-		current_state = STATE.IDLE
