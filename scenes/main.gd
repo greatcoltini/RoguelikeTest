@@ -10,7 +10,7 @@ var bat_file = preload("res://scenes/entities/bat.tscn")
 var maps = [preload("res://scenes/levels/map1.tscn")]
 
 @onready var ui = $UI
-@onready var levelbar = $UI/levelProgress
+@onready var levelbar = $UI/enemiesRemaining
 
 var map = null
 var spawn_area = null
@@ -23,6 +23,7 @@ var dungeon_exit = null
 func _ready():
 	_start_game()
 	player.scene_change.connect(_new_level)
+	player.ui = ui;
 	
 # maybe we add pause and anim here
 func _new_level():
@@ -52,8 +53,7 @@ func _start_game():
 	enemies_to_spawn = randi_range(1 + current_level, 2 + current_level)
 	
 	# setup level bar
-	levelbar.max_value = enemies_to_spawn
-	levelbar.value = 0
+	levelbar.value = 12.5 * enemies_to_spawn
 	
 	var spawn_timer = get_tree().create_timer(randi_range(1, 3))
 	spawn_timer.timeout.connect(spawn_blob) # Replace with function body.
@@ -90,8 +90,7 @@ func spawn_blob():
 # decrement enemies when kill
 func decrement_enemies():
 	enemies_alive -= 1
-	#levelbar.value += 1
-	levelbar.increment(1)
+	levelbar.value -= 12.5
 	
 	if enemies_to_spawn <= 0 and enemies_alive <= 0:
 		dungeon_exit.get_node("AnimationPlayer").play("open")

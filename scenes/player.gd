@@ -7,7 +7,7 @@ signal scene_change
 # export variables
 @export var move_speed : float = 100
 @export var starting_position : Vector2 = Vector2(0, 1)
-@export var health : int = 100
+@export var health : int = 3
 
 @export var weaponComponent = Node2D;
 
@@ -24,6 +24,7 @@ var in_exit_zone = false
 
 # recoil represents character being pushed by entity
 var recoil = false
+var ui;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -99,6 +100,7 @@ func _on_animation_tree_animation_finished(anim_name):
 # player takes damage	
 func damage(entity, amount):
 	health -= amount
+	ui.hp.value -= 12.5
 	
 	velocity = (sprite.global_position - entity.global_position) * 10
 	paused = true

@@ -1,14 +1,28 @@
-[gd_scene load_steps=2 format=3 uid="uid://tbjldm3eenuo"]
+[gd_scene load_steps=4 format=3 uid="uid://tbjldm3eenuo"]
 
-[ext_resource type="Script" path="res://scenes/overlay/levelProgress.gd" id="1_me32b"]
+[ext_resource type="Script" path="res://scenes/overlay/ui.gd" id="1_ofhal"]
+[ext_resource type="Texture2D" uid="uid://dkwr3u5lr7nqi" path="res://assets/overlay/enemy-counter-2.png" id="2_dgdff"]
+[ext_resource type="Texture2D" uid="uid://b82rxnn8xq2ta" path="res://assets/overlay/hp-overlay.png" id="2_o4rei"]
 
 [node name="UI" type="CanvasLayer"]
+script = ExtResource("1_ofhal")
 
-[node name="levelProgress" type="ProgressBar" parent="."]
-offset_left = 423.0
-offset_top = 600.0
-offset_right = 680.0
+[node name="enemiesRemaining" type="TextureProgressBar" parent="."]
+offset_left = 765.0
+offset_top = 588.0
+offset_right = 1021.0
+offset_bottom = 628.0
+scale = Vector2(1.5, 1.5)
+step = 12.5
+value = 12.5
+fill_mode = 1
+texture_progress = ExtResource("2_dgdff")
+
+[node name="hp" type="TextureProgressBar" parent="."]
+offset_left = 7.0
+offset_top = 587.0
+offset_right = 263.0
 offset_bottom = 627.0
-scale = Vector2(1.52337, 1.61855)
-show_percentage = false
-script = ExtResource("1_me32b")
+scale = Vector2(1.5, 1.5)
+value = 38.0
+texture_progress = ExtResource("2_o4rei")

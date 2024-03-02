@@ -53,7 +53,9 @@ func _ready():
 # idle function
 func _physics_process(_delta):
 	# run idle animation, on idle animation end decide to jump
-	
+	if current_state == STATE.DEATH:
+		return
+		
 	if not recoil:
 		if current_state == STATE.JUMP:
 			velocity = move_direction.normalized() * MOVE_SPEED	

@@ -171,6 +171,8 @@ radius = 6.00757
 height = 39.9988
 
 [node name="bat" type="CharacterBody2D"]
+scale = Vector2(0.5, 0.5)
+motion_mode = 1
 script = ExtResource("1_idf3a")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
