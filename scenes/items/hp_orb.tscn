@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://cl4vmapwtp7hb"]
+
+[ext_resource type="Texture2D" uid="uid://dav6ueayllt5b" path="res://assets/items/hp-orb.png" id="1_kg1cj"]
+[ext_resource type="Script" path="res://scenes/items/hp-orb.gd" id="1_xf2us"]
+
+[sub_resource type="Animation" id="Animation_cnkdc"]
+resource_name = "default"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 5), Vector2(0, 0), Vector2(0, -5)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kc0tk"]
+_data = {
+"default": SubResource("Animation_cnkdc")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_oddgq"]
+radius = 5.09902
+
+[node name="hp-orb" type="StaticBody2D"]
+scale = Vector2(0.25, 0.25)
+script = ExtResource("1_xf2us")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_kg1cj")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_kc0tk")
+}
+autoplay = "default"
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_oddgq")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

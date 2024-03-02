@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://tbjldm3eenuo"]
+[gd_scene load_steps=6 format=3 uid="uid://tbjldm3eenuo"]
 
 [ext_resource type="Script" path="res://scenes/overlay/ui.gd" id="1_ofhal"]
 [ext_resource type="Texture2D" uid="uid://dkwr3u5lr7nqi" path="res://assets/overlay/enemy-counter-2.png" id="2_dgdff"]
 [ext_resource type="Texture2D" uid="uid://b82rxnn8xq2ta" path="res://assets/overlay/hp-overlay.png" id="2_o4rei"]
+[ext_resource type="Texture2D" uid="uid://cuqs0kwq16ujt" path="res://assets/overlay/soul-overlay.png" id="4_wv47f"]
+[ext_resource type="Texture2D" uid="uid://vtot3xaru1jr" path="res://assets/overlay/soul-overlay-filled.png" id="5_20sll"]
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_ofhal")
@@ -26,3 +28,12 @@ offset_bottom = 627.0
 scale = Vector2(1.5, 1.5)
 value = 38.0
 texture_progress = ExtResource("2_o4rei")
+
+[node name="soul-shards" type="TextureProgressBar" parent="."]
+offset_left = 2.0
+offset_top = 546.0
+offset_right = 258.0
+offset_bottom = 586.0
+value = 50.0
+texture_under = ExtResource("4_wv47f")
+texture_progress = ExtResource("5_20sll")

@@ -8,6 +8,7 @@ signal scene_change
 @export var move_speed : float = 100
 @export var starting_position : Vector2 = Vector2(0, 1)
 @export var health : int = 3
+@export var MAX_HP : int = 3
 
 @export var weaponComponent = Node2D;
 
@@ -114,6 +115,15 @@ func damage(entity, amount):
 	
 	if health <= 0:
 		get_tree().quit()
+		
+# player heals
+func heal(amount):
+	health += amount
+	ui.hp.value += 12.5
+	
+	var tween = create_tween()
+	tween.tween_property(sprite, "modulate:g", 1.0, 0.1)
+	tween.tween_property(sprite, "modulate:g", 0, 0.1)
 		
 func unpause():
 	velocity = Vector2.ZERO

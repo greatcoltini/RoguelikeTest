@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://byi8qdhfi7whi"]
+
+[ext_resource type="Texture2D" uid="uid://ba8vas33j2pfb" path="res://assets/items/soul-shard.png" id="1_h6mem"]
+
+[node name="Node2D" type="StaticBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_h6mem")
