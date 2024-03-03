@@ -1,5 +1,8 @@
 extends Node2D
 
+# signals
+signal level_cleared
+
 var enemies_alive = 0
 var enemies_to_spawn = 1
 var current_level = 0
@@ -99,6 +102,7 @@ func decrement_enemies():
 		dungeon_exit.get_node("AnimationPlayer").play("open")
 		dungeon_exit.get_node("Area2D").monitoring = true
 		dungeon_exit.get_node("Interact").visible = true
+		emit_signal("level_cleared")
 		
 
 		

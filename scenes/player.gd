@@ -28,13 +28,12 @@ var in_exit_zone = false
 
 # recoil represents character being pushed by entity
 var recoil = false
-var ui;
+@export var ui : CanvasLayer;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#weaponComponent.visible = false
-	pass
-	
+	ui.level_window.dmgUP.connect(weaponComponent.increase_damage)
+	ui.level_window.hpUP.connect(func(): MAX_HP += 1)
 
 	
 func _physics_process(_delta):
@@ -68,10 +67,6 @@ func _input(event: InputEvent):
 		weaponComponent.area.monitoring = true;
 		paused = true;
 		weaponComponent.visible = true
-		
-	if (event.is_action_pressed("attack") and not paused):
-		
-		pass
 		
 	# check case for exit area
 	if (event.is_action_pressed("interact") and not paused and in_exit_zone):
@@ -133,6 +128,9 @@ func add_souls(amount):
 	ui.soul_shards.value += 1
 	souls += amount
 	print(souls)
+	
+func level_up():
+	pass
 		
 func unpause():
 	velocity = Vector2.ZERO

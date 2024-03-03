@@ -1,10 +1,19 @@
-[gd_scene load_steps=6 format=3 uid="uid://tbjldm3eenuo"]
+[gd_scene load_steps=11 format=3 uid="uid://tbjldm3eenuo"]
 
 [ext_resource type="Script" path="res://scenes/overlay/ui.gd" id="1_ofhal"]
 [ext_resource type="Texture2D" uid="uid://dkwr3u5lr7nqi" path="res://assets/overlay/enemy-counter-2.png" id="2_dgdff"]
 [ext_resource type="Texture2D" uid="uid://b82rxnn8xq2ta" path="res://assets/overlay/hp-overlay.png" id="2_o4rei"]
 [ext_resource type="Texture2D" uid="uid://cuqs0kwq16ujt" path="res://assets/overlay/soul-overlay.png" id="4_wv47f"]
 [ext_resource type="Texture2D" uid="uid://vtot3xaru1jr" path="res://assets/overlay/soul-overlay-filled.png" id="5_20sll"]
+[ext_resource type="Script" path="res://scenes/overlay/level-window.gd" id="6_55y0r"]
+[ext_resource type="Texture2D" uid="uid://b12mm2jdytafw" path="res://assets/overlay/dmg-level-card.png" id="7_tw5eu"]
+[ext_resource type="Texture2D" uid="uid://brh30f286hyhl" path="res://assets/overlay/hp-level-card.png" id="8_4ydrd"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_736p4"]
+texture = ExtResource("7_tw5eu")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nxgyo"]
+texture = ExtResource("8_4ydrd")
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_ofhal")
@@ -34,5 +43,29 @@ offset_left = 1.0
 offset_top = 613.0
 offset_right = 257.0
 offset_bottom = 653.0
+value = 100.0
 texture_under = ExtResource("4_wv47f")
 texture_progress = ExtResource("5_20sll")
+
+[node name="level-window" type="GridContainer" parent="."]
+visible = false
+offset_left = 449.0
+offset_top = 202.0
+offset_right = 581.0
+offset_bottom = 330.0
+scale = Vector2(1.5, 1.5)
+columns = 2
+script = ExtResource("6_55y0r")
+
+[node name="dmg-level" type="Panel" parent="level-window"]
+custom_minimum_size = Vector2(64, 128)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_736p4")
+
+[node name="hp-level" type="Panel" parent="level-window"]
+custom_minimum_size = Vector2(64, 128)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_nxgyo")
+
+[connection signal="gui_input" from="level-window/dmg-level" to="level-window" method="on_click_dmg"]
+[connection signal="gui_input" from="level-window/hp-level" to="level-window" method="on_click_hp"]

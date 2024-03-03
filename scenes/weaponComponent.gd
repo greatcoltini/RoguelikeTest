@@ -10,6 +10,7 @@ var direction
 var new_angle;
 var attacking;
 var can_attack;
+var damage = 1;
 
 
 var current_hitters = [];
@@ -59,11 +60,9 @@ func _on_area_2d_body_entered(body):
 	if self in body.get_children():
 		return;
 	
-	if body in current_hitters:
-		print("already hit")
-	else:
+	if not (body in current_hitters):
 		if body.has_method("hit"):
-			body.hit(self)
+			body.hit(self, damage)
 		current_hitters.append(body)
 		# Create a one-shot timer with a timeout function using a lambda function
 		var hit_timer = get_tree().create_timer(0.2)
@@ -71,11 +70,12 @@ func _on_area_2d_body_entered(body):
 
 func _clear_bodys():
 	current_hitters.clear()
-	
-
 
 func _on_area_2d_body_exited(body):
 	if self in body.get_children():
 		pass;
 	else:
 		print(body); # Replace with function body. # Replace with function body.
+		
+func increase_damage():
+	self.damage += 1

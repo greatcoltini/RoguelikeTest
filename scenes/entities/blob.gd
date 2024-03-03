@@ -130,7 +130,7 @@ func _on_body_entered(body):
 func _on_timer_timeout():
 	pick_new_state()
 	
-func hit(attacker):
+func hit(attacker, damage := 1):
 	var damage_part = damage_particle.instantiate()
 
 	add_child(damage_part)
@@ -140,7 +140,7 @@ func hit(attacker):
 		velocity = (sprite.global_position - attacker.sprite.global_position) * 15
 		recoil = true
 		hittimer.start(0.15)
-		current_health -= 1
+		current_health -= damage
 		emit_signal("damaged")
 		#animation_player.play("damage")
 		# create on-hit particle

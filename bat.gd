@@ -101,7 +101,7 @@ func fire_attack():
 	current_state = STATE.MOVE
 	pick_new_direction()
 	
-func hit(attacker):
+func hit(attacker, damage := 1):
 	var damage_part = damage_particle.instantiate()
 
 	add_child(damage_part)
@@ -113,7 +113,7 @@ func hit(attacker):
 		# oneshot timer to reset state after recoil
 		var recoil_timeout = get_tree().create_timer(RECOIL_TIMER)
 		recoil_timeout.timeout.connect(func(): current_state = STATE.MOVE)
-		current_health -= 1
+		current_health -= damage
 		emit_signal("damaged")
 		
 	if current_health <= 0:
@@ -140,7 +140,7 @@ func drop_items():
 		hp_orb.position = position
 		
 	# soul shard spawning
-	var soul_shard_amount = randi_range(3, 7)
+	var soul_shard_amount = randi_range(100, 100)
 	for i in range(soul_shard_amount):
 		var soul_shard = soul_shard_item.instantiate()
 		get_tree().current_scene.call_deferred("add_child", soul_shard)
