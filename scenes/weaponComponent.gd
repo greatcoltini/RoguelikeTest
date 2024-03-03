@@ -23,16 +23,17 @@ func _ready():
 	
 	
 func _physics_process(delta):
-	if not attacking:
-		# get vector from weapon to mouse position
-		mouse_pos = get_local_mouse_position()
-		direction = (sprite.position - mouse_pos).normalized()
+	if not Globals.GAME_PAUSED:
+		if not attacking:
+			# get vector from weapon to mouse position
+			mouse_pos = get_local_mouse_position()
+			direction = (sprite.position - mouse_pos).normalized()
+			
+			# create angle out of this vector
+			new_angle = (1.75*PI) + atan2(direction.y, direction.x)
+			
+			sprite.rotation = new_angle;
 		
-		# create angle out of this vector
-		new_angle = (1.75*PI) + atan2(direction.y, direction.x)
-		
-		sprite.rotation = new_angle;
-	
 func _input(event: InputEvent):
 	if (event.is_action_pressed("attack") and can_attack):
 		toggle_attack()

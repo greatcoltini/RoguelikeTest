@@ -10,7 +10,6 @@ signal scene_change
 @export var health : int = 3
 @export var MAX_HP : int = 3
 @export var SOULS_TO_LEVEL : int = 100
-@export var souls : int = 0
 
 
 @export var weaponComponent = Node2D;
@@ -28,32 +27,34 @@ var in_exit_zone = false
 
 # recoil represents character being pushed by entity
 var recoil = false
+
+# export main and ui
 @export var ui : CanvasLayer;
+@export var main : Node2D;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	ui.level_window.dmgUP.connect(weaponComponent.increase_damage)
 	ui.level_window.hpUP.connect(func(): MAX_HP += 1)
-
 	
 func _physics_process(_delta):
-	# get input direction
-	var input_direction = Input.get_vector("left", "right", "up", "down")
-	
-	if not paused:
-		if not input_direction == Vector2.ZERO:
-			input_direction = input_direction.normalized()
-		velocity = input_direction * move_speed	
+	# if ui window open, prevent movement:
+	if not Globals.GAME_PAUSED:
+		# get input direction
+		var input_direction = Input.get_vector("left", "right", "up", "down")
 		
-		update_animation_parameters(input_direction)
-		move_and_slide()
-		pick_new_state()
-		
-	if recoil:
-		move_and_slide()
-		
-	# mess around to make this work
-
+		if not paused:
+			if not input_direction == Vector2.ZERO:
+				input_direction = input_direction.normalized()
+			velocity = input_direction * move_speed	
+			
+			update_animation_parameters(input_direction)
+			move_and_slide()
+			pick_new_state()
+			
+		if recoil:
+			move_and_slide()
+			
 func _input(event: InputEvent):
 	
 	var input_direction = Input.get_vector("left", "right", "up", "down")
@@ -126,11 +127,6 @@ func heal(amount):
 
 func add_souls(amount):
 	ui.soul_shards.value += 1
-	souls += amount
-	print(souls)
-	
-func level_up():
-	pass
 		
 func unpause():
 	velocity = Vector2.ZERO

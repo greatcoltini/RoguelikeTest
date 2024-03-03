@@ -22,5 +22,6 @@ func enemies_showcase():
 	
 	
 func toggle_level_window():
+	Globals.GAME_PAUSED = true
 	if soul_shards.value >= 100:
 		level_window.visible = true

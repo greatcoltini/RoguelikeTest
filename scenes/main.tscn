@@ -10,6 +10,7 @@ script = ExtResource("1_p0fl5")
 [node name="UI" parent="." node_paths=PackedStringArray("main") groups=["UI"] instance=ExtResource("2_c8y4a")]
 main = NodePath("..")
 
-[node name="player" parent="." node_paths=PackedStringArray("ui") instance=ExtResource("3_q6so6")]
+[node name="player" parent="." node_paths=PackedStringArray("ui", "main") instance=ExtResource("3_q6so6")]
 position = Vector2(111, 77)
 ui = NodePath("../UI")
+main = NodePath("..")
