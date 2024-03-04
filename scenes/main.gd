@@ -10,6 +10,8 @@ var current_level = 0
 var blob_file = preload("res://scenes/entities/blob.tscn")
 var bat_file = preload("res://scenes/entities/bat.tscn")
 
+var mobs = [blob_file, bat_file]
+
 var maps = [preload("res://scenes/levels/map1.tscn")]
 
 @onready var ui = $UI
@@ -62,14 +64,14 @@ func _start_game():
 	levelbar.value = 12.5 * enemies_to_spawn
 	
 	var spawn_timer = get_tree().create_timer(randi_range(1, 3))
-	spawn_timer.timeout.connect(spawn_blob) # Replace with function body.
+	spawn_timer.timeout.connect(spawn_enemy) # Replace with function body.
 	place_player()
 
 # spawning parameters for blobs..
-func spawn_blob():
+func spawn_enemy():
 	enemies_to_spawn -= 1
 	enemies_alive += 1
-	var blob = bat_file.instantiate()
+	var enemy = mobs[randi_range(0, mobs.size() - 1)].instantiate()
 	
 	var cur_spawn_area = spawn_area[randi() % int(spawn_area.size())]
 	
@@ -84,13 +86,13 @@ func spawn_blob():
 		positionInArea.x = (randi() % int(size.x)) - (size.x/2) + centerpos.x
 		positionInArea.y = (randi() % int(size.y)) - (size.y/2) + centerpos.y
 	
-	blob.position = positionInArea
-	blob.removed.connect(self.decrement_enemies)
-	add_child(blob)
+	enemy.position = positionInArea
+	enemy.removed.connect(self.decrement_enemies)
+	add_child(enemy)
 	
 	if enemies_to_spawn > 0:
 		var spawn_timer = get_tree().create_timer(randi_range(1, 3))
-		spawn_timer.timeout.connect(spawn_blob)
+		spawn_timer.timeout.connect(spawn_enemy)
 	
 
 # decrement enemies when kill
