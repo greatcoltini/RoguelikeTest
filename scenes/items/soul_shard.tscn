@@ -8,6 +8,7 @@ radius = 5.09902
 
 [sub_resource type="Animation" id="Animation_0ls6w"]
 resource_name = "default"
+length = 0.5
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -16,7 +17,7 @@ tracks/0/path = NodePath("Sprite2D:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.0, 6.28319]
@@ -32,6 +33,7 @@ scale = Vector2(0.25, 0.25)
 script = ExtResource("1_grc8y")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.62285
 texture = ExtResource("1_h6mem")
 
 [node name="Area2D" type="Area2D" parent="."]
