@@ -25,6 +25,7 @@ var damage_particle = preload("res://entities/particles/damage_particle.tscn")
 var projectile = preload("res://scenes/entities/bat_projectile.tscn")
 var hp_orb_item = preload("res://scenes/items/hp_orb.tscn")
 var soul_shard_item = preload("res://scenes/items/soul_shard.tscn")
+var enemy_slain_text = preload("res://scenes/overlay/enemy_slain.tscn")
 
 var player
 var can_attack = true
@@ -130,6 +131,10 @@ func _on_animation_tree_animation_finished(anim_name):
 		queue_free()
 		
 func drop_items():
+	# spawn enemy slain text
+	var enemy_slain_text_inst = enemy_slain_text.instantiate()
+	get_tree().current_scene.call_deferred("add_child", enemy_slain_text_inst)
+	enemy_slain_text_inst.position = position - Vector2(0, 20)
 	# hp orb spawning
 	var hp_orb_amount = randi_range(0, 1)
 	if hp_orb_amount > 0:

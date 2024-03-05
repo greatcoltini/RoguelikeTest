@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://byi8qdhfi7whi"]
+[gd_scene load_steps=8 format=3 uid="uid://byi8qdhfi7whi"]
 
 [ext_resource type="Script" path="res://scenes/items/soul_shard.gd" id="1_grc8y"]
 [ext_resource type="Texture2D" uid="uid://ba8vas33j2pfb" path="res://assets/items/soul-shard.png" id="1_h6mem"]
+[ext_resource type="Texture2D" uid="uid://b8s1c8kuhauh7" path="res://assets/items/particle-soul-shard.png" id="3_e18ly"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_m46af"]
 radius = 5.09902
@@ -28,12 +29,21 @@ _data = {
 "default": SubResource("Animation_0ls6w")
 }
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dk2v5"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 15.0
+direction = Vector3(0, -1, 0)
+spread = 90.0
+gravity = Vector3(0, -5, 0)
+scale_min = 0.4
+scale_max = 0.5
+
 [node name="soul_shard" type="StaticBody2D"]
 scale = Vector2(0.25, 0.25)
 script = ExtResource("1_grc8y")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-rotation = 1.62285
 texture = ExtResource("1_h6mem")
 
 [node name="Area2D" type="Area2D" parent="."]
@@ -46,5 +56,11 @@ libraries = {
 "": SubResource("AnimationLibrary_ax3d5")
 }
 autoplay = "default"
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+process_material = SubResource("ParticleProcessMaterial_dk2v5")
+texture = ExtResource("3_e18ly")
+lifetime = 2.0
+randomness = 0.3
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

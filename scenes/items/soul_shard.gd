@@ -13,7 +13,7 @@ func _ready():
 
 func _physics_process(delta):
 	
-	if movement_enabled:
+	if movement_enabled and player:
 		player = get_tree().get_first_node_in_group("Player");
 		direction = (player.position - position).normalized();
 		position += direction * SPEED * delta;

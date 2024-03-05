@@ -82,7 +82,7 @@ func spawn_enemy():
 	positionInArea.x = (randi() % int(size.x)) - (size.x/2) + centerpos.x
 	positionInArea.y = (randi() % int(size.y)) - (size.y/2) + centerpos.y
 	
-	while (positionInArea.distance_to(player.position) < 10):
+	while (positionInArea.distance_to(player.position) < 25):
 		positionInArea.x = (randi() % int(size.x)) - (size.x/2) + centerpos.x
 		positionInArea.y = (randi() % int(size.y)) - (size.y/2) + centerpos.y
 	
@@ -106,7 +106,6 @@ func decrement_enemies():
 		dungeon_exit.get_node("Interact").visible = true
 		emit_signal("level_cleared")
 		
-
 		
 # sets up the initial level parameters		
 func setup():
