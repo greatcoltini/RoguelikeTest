@@ -134,7 +134,7 @@ func drop_items():
 	# spawn enemy slain text
 	var enemy_slain_text_inst = enemy_slain_text.instantiate()
 	get_tree().current_scene.call_deferred("add_child", enemy_slain_text_inst)
-	enemy_slain_text_inst.position = position - Vector2(0, 20)
+	enemy_slain_text_inst.position = position
 	# hp orb spawning
 	var hp_orb_amount = randi_range(0, 1)
 	if hp_orb_amount > 0:

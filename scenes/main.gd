@@ -10,7 +10,7 @@ var current_level = 0
 var blob_file = preload("res://scenes/entities/blob.tscn")
 var bat_file = preload("res://scenes/entities/bat.tscn")
 
-var mobs = [blob_file, bat_file]
+var mobs = [bat_file]
 
 var maps = [preload("res://scenes/levels/map1.tscn")]
 
