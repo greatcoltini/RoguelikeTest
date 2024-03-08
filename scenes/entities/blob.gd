@@ -102,30 +102,11 @@ func pick_new_state():
 			state_machine.travel("jump")
 	else:
 		state_machine.travel("go-sleep")
-
-# detect for players function
-func attack_in_range():
-	""" we will raycast for the player, if it is within a certain range we will adjust ai
-		and jump towards player specifically"""
-#	var query = PhysicsRayQueryParameters2D.create(sprite.global_position, move_direction.normalized() * (move_speed * 50))
-#	var results = space_state.intersect_ray(query)
-#	if results:
-#		#print("position of item: ", results.position)
-#		#print("distance_to: ", sprite.global_position.distance_to(results.position))
-#		if sprite.global_position.distance_to(results.position) < 20:
-#			select_new_direction()	
-
-# jump function
-func jump(_target):
-	""" play the jump animation, at the launch point of the animation we will apply force to the blob"""
-	pass
-	
 	
 # when player collides with blob, deal damage
 func _on_body_entered(body):
 	if body in get_tree().get_nodes_in_group("Player"):
 		body.damage(self, DAMAGE_AMOUNT)
-
 
 func _on_timer_timeout():
 	pick_new_state()

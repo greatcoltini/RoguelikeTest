@@ -31,18 +31,19 @@ texture_progress = ExtResource("2_dgdff")
 
 [node name="hp" type="TextureProgressBar" parent="."]
 offset_left = 1.0
-offset_top = 564.0
+offset_top = 598.0
 offset_right = 257.0
-offset_bottom = 604.0
-scale = Vector2(1.5, 1.5)
-value = 38.0
+offset_bottom = 638.0
+scale = Vector2(1.23685, 0.770749)
+value = 100.0
 texture_progress = ExtResource("2_o4rei")
 
 [node name="soul-shards" type="TextureProgressBar" parent="."]
 offset_left = 1.0
-offset_top = 613.0
+offset_top = 622.0
 offset_right = 257.0
-offset_bottom = 653.0
+offset_bottom = 662.0
+scale = Vector2(1.237, 0.77)
 texture_under = ExtResource("4_wv47f")
 texture_progress = ExtResource("5_20sll")
 

@@ -9,6 +9,7 @@ var current_level = 0
 
 var blob_file = preload("res://scenes/entities/blob.tscn")
 var bat_file = preload("res://scenes/entities/bat.tscn")
+var bat_red_file = preload("res://scenes/entities/bat_red.tscn")
 
 var mobs = [bat_file]
 
@@ -61,7 +62,8 @@ func _start_game():
 	ui.enemies_showcase()
 	
 	# setup level bar
-	levelbar.value = 12.5 * enemies_to_spawn
+	levelbar.value = 100
+	levelbar.step = (100 / enemies_to_spawn)
 	
 	var spawn_timer = get_tree().create_timer(randi_range(1, 3))
 	spawn_timer.timeout.connect(spawn_enemy) # Replace with function body.
@@ -98,13 +100,20 @@ func spawn_enemy():
 # decrement enemies when kill
 func decrement_enemies():
 	enemies_alive -= 1
-	levelbar.value -= 12.5
+	levelbar.value -= levelbar.step
 	
 	if enemies_to_spawn <= 0 and enemies_alive <= 0:
 		dungeon_exit.get_node("AnimationPlayer").play("open")
 		dungeon_exit.get_node("Area2D").monitoring = true
 		dungeon_exit.get_node("Interact").visible = true
+		current_level += 1
+		mob_list_adjust()
 		emit_signal("level_cleared")
+		
+func mob_list_adjust():
+	if current_level > 5:
+		if not bat_red_file in mobs:
+			mobs.append(bat_red_file)
 		
 		
 # sets up the initial level parameters		

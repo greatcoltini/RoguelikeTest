@@ -34,8 +34,9 @@ var recoil = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	ui.level_window.dmgUP.connect(weaponComponent.increase_damage)
-	ui.level_window.hpUP.connect(func(): MAX_HP += 1)
+	if ui:
+		ui.level_window.dmgUP.connect(weaponComponent.increase_damage)
+		ui.level_window.hpUP.connect(func(): MAX_HP += 1)
 	
 func _physics_process(_delta):
 	# if ui window open, prevent movement:
@@ -100,7 +101,7 @@ func _on_animation_tree_animation_finished(anim_name):
 # player takes damage	
 func damage(entity, amount):
 	health -= amount
-	ui.hp.value -= 12.5
+	ui.hp.value = 100 * (health / MAX_HP)
 	
 	velocity = (sprite.global_position - entity.global_position) * 10
 	paused = true
@@ -119,7 +120,7 @@ func damage(entity, amount):
 func heal(amount):
 	if health < MAX_HP:
 		health += amount
-		ui.hp.value += 12.5
+		ui.hp.value = 100 * ( float(health) / float(MAX_HP))
 		
 		var tween = create_tween()
 		tween.tween_property(sprite, "modulate:a", 0.5, 0.1)
@@ -132,3 +133,6 @@ func unpause():
 	velocity = Vector2.ZERO
 	paused = false
 	recoil = false
+	
+func get_souls():
+	return ui.soul_shards.value

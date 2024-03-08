@@ -5,9 +5,9 @@ const DAMAGE_AMOUNT = 10
 const WALK_TIME = 6
 const RECOIL_TIMER = 1
 const MOVE_SPEED = 25
-const MAX_HEALTH = 3
+const MAX_HEALTH = 6
 const ATTACK_DELAY = 5
-const SOUL_SHARDS = 5
+const SOUL_SHARDS = 15
 const HP_ORB_CHANCE = 30
 
 # exports for constructor use
@@ -88,7 +88,15 @@ func attack():
 		in_attack_cycle = true
 		state_machine.travel("attack");
 		var tween = create_tween()
-		tween.tween_property(self, "modulate:a", 0.5, 0.5)
+		tween.tween_property(self, "modulate:a", 0.5, 0.3)
+		tween.tween_property(self, "modulate:a", 1, 0.1)
+		tween.tween_callback(fire_attack)
+		var tween2 = create_tween()
+		tween.tween_property(self, "modulate:a", 0.5, 0.3)
+		tween.tween_property(self, "modulate:a", 1, 0.1)
+		tween.tween_callback(fire_attack)
+		var tween3 = create_tween()
+		tween.tween_property(self, "modulate:a", 0.5, 0.3)
 		tween.tween_property(self, "modulate:a", 1, 0.1)
 		tween.tween_callback(fire_attack)
 			

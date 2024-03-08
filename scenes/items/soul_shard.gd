@@ -13,13 +13,13 @@ func _ready():
 
 func _physics_process(delta):
 	
-	if movement_enabled and player:
+	if movement_enabled and player and player.get_souls() < 100:
 		player = get_tree().get_first_node_in_group("Player");
 		direction = (player.position - position).normalized();
 		position += direction * SPEED * delta;
 		
 func _on_area_2d_body_entered(body):
-	if body == player:
+	if body == player and player.get_souls() < 100:
 		player.add_souls(1)
 		queue_free()
 		
