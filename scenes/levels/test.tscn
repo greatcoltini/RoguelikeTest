@@ -4,7 +4,7 @@
 [ext_resource type="TileSet" uid="uid://bbuv6cltuaf2s" path="res://scenes/tileset/main.tres" id="2_w2anm"]
 [ext_resource type="PackedScene" uid="uid://by3ramtx2dlbq" path="res://scenes/objects/dungeon_exit.tscn" id="3_ru2qi"]
 [ext_resource type="PackedScene" uid="uid://djs0af7g3dxbf" path="res://scenes/player.tscn" id="4_hxw3d"]
-[ext_resource type="PackedScene" uid="uid://dwxqbqa5lceiq" path="res://scenes/entities/bat_red.tscn" id="5_lv4dh"]
+[ext_resource type="PackedScene" uid="uid://c3ww68x6na3q3" path="res://scenes/entities/skeleton_knight.tscn" id="5_dlkno"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p26h1"]
 size = Vector2(179, 156.5)
@@ -43,5 +43,5 @@ shape = SubResource("RectangleShape2D_pbtse")
 [node name="player" parent="." instance=ExtResource("4_hxw3d")]
 position = Vector2(218, 94)
 
-[node name="bat_red" parent="." instance=ExtResource("5_lv4dh")]
-position = Vector2(156, 148)
+[node name="skeleton-knight" parent="." instance=ExtResource("5_dlkno")]
+position = Vector2(160, 94)
