@@ -24,6 +24,7 @@ signal scene_change
 # init regular variables
 var paused = false
 var in_exit_zone = false
+var invul = false
 
 # recoil represents character being pushed by entity
 var recoil = false
@@ -100,21 +101,24 @@ func _on_animation_tree_animation_finished(anim_name):
 	
 # player takes damage	
 func damage(entity, amount):
-	health -= amount
-	ui.hp.value = 100 * (health / MAX_HP)
-	
-	velocity = (sprite.global_position - entity.global_position) * 10
-	paused = true
-	
-	Globals.DAMAGE_EFFECT(self, sprite, 1)
-	
-	
-	var bounce_timer = get_tree().create_timer(0.2)
-	bounce_timer.timeout.connect(unpause) # Replace with function body.
-	recoil = true
-	
-	if health <= 0:
-		get_tree().quit()
+	if not invul:
+		health -= amount
+		if ui:
+			ui.hp.value = 100 * (health / MAX_HP)
+		
+		velocity = (sprite.global_position - entity.global_position) * 10
+		paused = true
+		
+		Globals.DAMAGE_EFFECT(self, sprite, 1)
+		
+		
+		var bounce_timer = get_tree().create_timer(0.2)
+		bounce_timer.timeout.connect(unpause) # Replace with function body.
+		recoil = true
+		invul = true
+		
+		if health <= 0:
+			get_tree().quit()
 		
 # player heals
 func heal(amount):
@@ -133,6 +137,7 @@ func unpause():
 	velocity = Vector2.ZERO
 	paused = false
 	recoil = false
+	invul = false
 	
 func get_souls():
 	return ui.soul_shards.value

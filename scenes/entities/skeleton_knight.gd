@@ -1,12 +1,11 @@
 extends "res://enemy.gd"
 
 # CONSTANTS
-const DAMAGE_AMOUNT = 10
-const WALK_TIME = 6
-const RECOIL_TIMER = 1
+const DAMAGE_AMOUNT = 1
+const RECOIL_TIMER = 0.3
 const MOVE_SPEED = 25
-const MAX_HEALTH = 3
-const ATTACK_DELAY = 2
+const MAX_HEALTH = 50
+const ATTACK_DELAY = 6
 const SOUL_SHARDS = 5
 const HP_ORB_CHANCE = 30
 
@@ -39,11 +38,11 @@ func _ready():
 	player = get_tree().get_first_node_in_group("Player")
 	state_machine = anim_tree.get("parameters/playback")
 	state_machine.start("walk")	
-	select_new_direction()
 	current_health = MAX_HEALTH
 
 # idle function
 func _physics_process(_delta):
+	flip_sprite()
 	# run idle animation, on idle animation end decide to jump
 	if current_health <= 0:
 			state_machine.travel("death")
@@ -56,31 +55,19 @@ func _physics_process(_delta):
 				current_state = STATE.IDLE
 				velocity = Vector2.ZERO
 				state_machine.travel("idle")
-			else:
+			if (current_state != STATE.RECOIL and self.position.distance_to(player.position) >= 50):
+				move_direction = position.direction_to(player.position)
 				velocity = move_direction.normalized() * MOVE_SPEED	
 				state_machine.travel("walk")
 			move_and_slide()
-		if (current_state == STATE.IDLE and self.position.distance_to(player.position) > 25):
-			state_machine.travel("idle")
+		if (current_state == STATE.IDLE):
 			pick_state()
 		
 		attack()
-	
-func select_new_direction():
-	if player:
-		move_direction = position.direction_to(player.position)
-	flip_sprite()
-	
-func pick_new_direction():
-	select_new_direction()
-	var move_timer = get_tree().create_timer(WALK_TIME)
-	move_timer.timeout.connect(pick_new_direction)
 		
 func flip_sprite():
-	if move_direction.x < 0:
-		sprite.flip_h = true
-	elif move_direction.x > 0:
-		sprite.flip_h = false
+	if self.to_local(player.global_position).x <= 0:
+		scale.x = -1
 
 # detect for players function
 func attack():
@@ -89,7 +76,7 @@ func attack():
 	if (player and (self.position.distance_to(player.position) < 50) and can_attack):
 		velocity = Vector2.ZERO
 		# faces player when attacking
-		sprite.flip_h = self.to_local(player.global_position).x < 0
+		
 		current_state = STATE.ATTACK
 		can_attack = false
 		in_attack_cycle = true
@@ -99,7 +86,6 @@ func attack():
 		#tween.tween_property(self, "modulate:a", 1, 0.1)
 		#tween.tween_callback(fire_attack)
 			
-		
 			
 		#
 #func fire_attack():
@@ -118,9 +104,17 @@ func hit(attacker, damage := 1):
 		# send in attacker info, create vector from self to attack, use that to direct
 		velocity = (sprite.global_position - attacker.sprite.global_position).normalized() * 50
 		current_state = STATE.RECOIL
-		# oneshot timer to reset state after recoil
-		var recoil_timeout = get_tree().create_timer(RECOIL_TIMER)
-		recoil_timeout.timeout.connect(func(): current_state = STATE.MOVE)
+		
+		if not (in_attack_cycle):
+			state_machine.travel("hurt")
+			can_attack = false
+			# oneshot timer to reset state after recoil
+			var recoil_timeout = get_tree().create_timer(RECOIL_TIMER)
+			recoil_timeout.timeout.connect(
+				func(): 
+					pick_state()
+					can_attack = true
+			)
 		current_health -= damage
 		emit_signal("damaged")
 		
@@ -148,10 +142,16 @@ func _on_animation_player_animation_finished(anim_name):
 		
 		
 func pick_state():
-	if self.position.distance_to(player.position) < 25:
+	if self.position.distance_to(player.position) < 50:
 		current_state = STATE.IDLE
 		state_machine.start("idle")
 	else:
 		current_state = STATE.MOVE
 		state_machine.start("walk")
 		pick_new_direction()
+		
+		
+# when player collides with blob, deal damage
+func _on_body_entered(body):
+	if body in get_tree().get_nodes_in_group("Player"):
+		body.damage(self, DAMAGE_AMOUNT)
