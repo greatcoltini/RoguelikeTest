@@ -1,0 +1,20 @@
+{
+	"bat": {
+		"file_path": "res://scenes/entities/bat.tscn",
+		"weight": 3,
+		"region": "forest",
+		"level_min": 1
+	},
+	"red bat": {
+		"file_path": "res://scenes/entities/bat_red.tscn",
+		"weight": 1,
+		"region": "forest",
+		"level_min": 5
+	},
+	"blob": {
+		"file_path": "res://scenes/entities/blob.tscn",
+		"weight": 3,
+		"region": "forest",
+		"level_min": 1
+	}
+}

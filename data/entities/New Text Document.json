@@ -1,0 +1,19 @@
+{
+	"bat": {
+		"file_path": "bat.tscn",
+		"weight": 3,
+		"region": "forest"
+	},
+	"red bat": {
+		"file_path": "bat_red.tscn",
+		"weight": 1,
+		"region": "forest"
+	},
+	"blob": {
+		"file_path": "blob.tscn",
+		"weight": 3,
+		"region": "forest"
+		
+	}
+	
+}

@@ -5,13 +5,10 @@ signal level_cleared
 
 var enemies_alive = 0
 var enemies_to_spawn = 1
-var current_level = 0
+var current_level = 1
+var current_region = "forest"
 
-var blob_file = preload("res://scenes/entities/blob.tscn")
-var bat_file = preload("res://scenes/entities/bat.tscn")
-var bat_red_file = preload("res://scenes/entities/bat_red.tscn")
-
-var mobs = [bat_file]
+var mobs = []
 
 var maps = [preload("res://scenes/levels/map1.tscn")]
 
@@ -60,6 +57,7 @@ func _start_game():
 	
 	# add in animation for ui to show enemies
 	ui.enemies_showcase()
+	generate_enemy_list()
 	
 	# setup level bar
 	levelbar.value = 100
@@ -75,9 +73,6 @@ func spawn_enemy():
 	enemies_alive += 1
 	var enemy_index = randi_range(0, mobs.size() - 1)
 	var enemy = mobs[enemy_index].instantiate()
-	
-	if mobs[enemy_index] == bat_red_file:
-		mobs.remove_at(enemy_index)
 	
 	var cur_spawn_area = spawn_area[randi() % int(spawn_area.size())]
 	
@@ -99,6 +94,16 @@ func spawn_enemy():
 	if enemies_to_spawn > 0:
 		var spawn_timer = get_tree().create_timer(randi_range(1, 3))
 		spawn_timer.timeout.connect(spawn_enemy)
+		
+func generate_enemy_list():
+	mobs = []
+	for key in JsonData.monster_data.keys():
+		var enemy = JsonData.monster_data[key]
+		if enemy["region"] == current_region and int(enemy["level_min"]) <= current_level:
+			for i in range(enemy["weight"]):
+				mobs.append(load(enemy["file_path"]))
+	for i in range(mobs.size()):
+		print(mobs[i].resource_path)
 	
 
 # decrement enemies when kill
@@ -111,13 +116,7 @@ func decrement_enemies():
 		dungeon_exit.get_node("Area2D").monitoring = true
 		dungeon_exit.get_node("Interact").visible = true
 		current_level += 1
-		mob_list_adjust()
 		emit_signal("level_cleared")
-		
-func mob_list_adjust():
-	if current_level > 5:
-		if not bat_red_file in mobs:
-			mobs.append(bat_red_file)
 		
 		
 # sets up the initial level parameters		
