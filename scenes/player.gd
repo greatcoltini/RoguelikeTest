@@ -104,7 +104,8 @@ func damage(entity, amount):
 	if not invul:
 		health -= amount
 		if ui:
-			ui.hp.value = 100 * (health / MAX_HP)
+			ui.hp.value = 100 * (float(health) / float(MAX_HP))
+			print(ui.hp.value)
 		
 		velocity = (sprite.global_position - entity.global_position) * 10
 		paused = true

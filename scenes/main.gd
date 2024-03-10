@@ -73,7 +73,11 @@ func _start_game():
 func spawn_enemy():
 	enemies_to_spawn -= 1
 	enemies_alive += 1
-	var enemy = mobs[randi_range(0, mobs.size() - 1)].instantiate()
+	var enemy_index = randi_range(0, mobs.size() - 1)
+	var enemy = mobs[enemy_index].instantiate()
+	
+	if mobs[enemy_index] == bat_red_file:
+		mobs.remove_at(enemy_index)
 	
 	var cur_spawn_area = spawn_area[randi() % int(spawn_area.size())]
 	
