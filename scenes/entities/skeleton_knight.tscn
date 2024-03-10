@@ -424,8 +424,9 @@ collider = NodePath("CollisionShape2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, 15)
-texture = ExtResource("2_qxkd8")
-hframes = 9
+texture = ExtResource("4_xwhtx")
+hframes = 4
+frame = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

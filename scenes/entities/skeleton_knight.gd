@@ -17,6 +17,7 @@ var anim_tree
 
 var state_machine
 var in_attack_cycle
+var recoil_prevent
 
 var surprise = preload("res://entities/effects/surprise_indicator.tscn")
 var damage_particle = preload("res://entities/particles/damage_particle.tscn")
@@ -101,13 +102,15 @@ func hit(attacker, damage := 1):
 	add_child(damage_part)
 	damage_part.position = sprite.position	
 	if current_health > 0:
-		# send in attacker info, create vector from self to attack, use that to direct
-		velocity = (sprite.global_position - attacker.sprite.global_position).normalized() * 50
-		current_state = STATE.RECOIL
 		
-		if not (in_attack_cycle):
+		if not in_attack_cycle and not recoil_prevent:
+			# send in attacker info, create vector from self to attack, use that to direct
+			velocity = (sprite.global_position - attacker.sprite.global_position).normalized() * 50
+			current_state = STATE.RECOIL
+			
 			state_machine.travel("hurt")
 			can_attack = false
+			recoil_prevent = true
 			# oneshot timer to reset state after recoil
 			var recoil_timeout = get_tree().create_timer(RECOIL_TIMER)
 			recoil_timeout.timeout.connect(
@@ -115,6 +118,14 @@ func hit(attacker, damage := 1):
 					pick_state()
 					can_attack = true
 			)
+			
+			# oneshot timer to prevent stunlock
+			var recoil_prevent_timer = get_tree().create_timer(3)
+			recoil_prevent_timer.timeout.connect(
+				func():
+					recoil_prevent = false
+			)
+			
 		current_health -= damage
 		emit_signal("damaged")
 		
