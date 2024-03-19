@@ -35,7 +35,7 @@ func _physics_process(delta):
 			sprite.rotation = new_angle;
 		
 func _input(event: InputEvent):
-	if (event.is_action_pressed("attack") and can_attack):
+	if ((event.is_action_pressed("attack") or event.is_action_pressed("space")) and can_attack):
 		toggle_attack()
 		modulate.a = 1.0
 		var tween = create_tween()

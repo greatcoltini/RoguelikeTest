@@ -1,16 +1,14 @@
-extends CharacterBody2D
+extends "res://enemy.gd"
 
 # BLOB CONSTANTS
-const DAMAGE_AMOUNT = 10
+const SOUL_SHARDS = 5
+const HP_ORB_CHANCE = 20
+const DAMAGE_AMOUNT = 1
 const WALK_TIME = 6
 const IDLE_TIME = 2
 const MOVE_SPEED = 3
 const CHASING_SPEED = 15
 const MAX_HEALTH = 3
-
-#signals
-signal damaged
-signal removed
 
 # initialize variables for relative parts of entity
 @onready var sprite = $Sprite2D
@@ -53,7 +51,8 @@ func _ready():
 # idle function
 func _physics_process(_delta):
 	# run idle animation, on idle animation end decide to jump
-	if current_state == STATE.DEATH:
+	if current_state == STATE.DEATH or current_health == 0:
+		state_machine.travel("death")
 		return
 		
 	if not recoil:
@@ -118,7 +117,7 @@ func hit(attacker, damage := 1):
 	damage_part.position = sprite.position	
 	if current_health > 0:
 		# send in attacker info, create vector from self to attack, use that to direct
-		velocity = (sprite.global_position - attacker.sprite.global_position) * 15
+		velocity = (sprite.global_position - attacker.sprite.global_position) * 5
 		recoil = true
 		hittimer.start(0.15)
 		current_health -= damage
@@ -143,16 +142,8 @@ func _on_animation_tree_animation_finished(anim_name):
 		collider.disabled = true
 		anim_tree.active = false
 		emit_signal("removed")
-		drop_items()
+		super.drop_items(SOUL_SHARDS, HP_ORB_CHANCE)
 		queue_free()
-		
-func drop_items():
-	var item_amount = randi_range(0, 2)
-	if item_amount > 0:
-		var item = item_drop.instantiate()
-		item.load_item("Goo", item_amount)
-		get_tree().current_scene.call_deferred("add_child", item)
-		item.position = position
 		
 		
 func enrage():

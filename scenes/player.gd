@@ -64,12 +64,12 @@ func _input(event: InputEvent):
 	if not input_direction == Vector2.ZERO:
 			input_direction = input_direction.normalized()
 	
-	if (event.is_action_pressed("space") and not paused):
-		anim_tree.set("parameters/Attack/blend_position", input_direction)
-		state_machine.travel("Attack")
-		weaponComponent.area.monitoring = true;
-		paused = true;
-		weaponComponent.visible = true
+	#if (event.is_action_pressed("space") and not paused):
+		#anim_tree.set("parameters/Attack/blend_position", input_direction)
+		#state_machine.travel("Attack")
+		#weaponComponent.area.monitoring = true;
+		#paused = true;
+		#weaponComponent.visible = true
 		
 	# check case for exit area
 	if (event.is_action_pressed("interact") and not paused and in_exit_zone):
