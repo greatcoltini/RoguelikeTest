@@ -1,0 +1,15 @@
+[gd_scene load_steps=5 format=3 uid="uid://x8khrexoscpv"]
+
+[ext_resource type="Script" path="res://scripts/Utilities.gd" id="1_1a5s3"]
+[ext_resource type="PackedScene" uid="uid://dc388hkklqvvc" path="res://scenes/main_menu.tscn" id="2_2wsm8"]
+[ext_resource type="PackedScene" uid="uid://cn4sis57vp3si" path="res://scenes/sample_game.tscn" id="3_1ydpw"]
+[ext_resource type="PackedScene" uid="uid://cd7cruw7dhrks" path="res://scenes/idle_game.tscn" id="4_u7y7u"]
+
+[node name="Utilities" type="Node"]
+script = ExtResource("1_1a5s3")
+scenes = Array[PackedScene]([ExtResource("3_1ydpw"), ExtResource("2_2wsm8"), ExtResource("4_u7y7u")])
+scene_map = {
+"IdleGame": 2,
+"MainMenu": 1,
+"SampleGame": 0
+}

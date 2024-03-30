@@ -19,6 +19,8 @@ config/icon="res://icon.svg"
 
 Globals="*res://GLOBALS.gd"
 JsonData="*res://JsonData.gd"
+Utilities="*res://scripts/Utilities.gd"
+AudioManager="*res://scripts/audio_manager.gd"
 
 [input]
 
