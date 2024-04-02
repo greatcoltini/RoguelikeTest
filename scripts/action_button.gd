@@ -28,4 +28,5 @@ func _unhandled_input(event):
 		Utilities.save_data()
 
 func display_key():
-	text = InputMap.action_get_events(action)[0].as_text()
+	#text = InputMap.action_get_events(action)[0].as_text()
+	pass

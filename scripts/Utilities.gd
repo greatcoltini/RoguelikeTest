@@ -8,6 +8,10 @@ extends Node
 const PATH = "user://settings.cfg"
 var config: ConfigFile
 
+func _init():
+	scenes = [load("res://scenes/main.tscn"), load("res://scenes/main_menu.tscn")]
+	scene_map = {"main": 0, "MainMenu": 1}
+
 func _ready():
 	config = ConfigFile.new()
 	for action in InputMap.get_actions():
